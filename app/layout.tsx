@@ -15,7 +15,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body
+        className={
+          inter.className + " min-h-screen bg-slate-700 text-slate-300"
+        }
+      >
+        {children}
+      </body>
     </html>
   );
 }
