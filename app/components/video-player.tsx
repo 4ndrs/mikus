@@ -114,7 +114,11 @@ const ProgressBar = ({ max, current, onChange }: PbProps) => {
     onChange(value);
   };
 
-  const handlePointerDown = () => {
+  const handlePointerDown = (event: React.MouseEvent) => {
+    if (event.button !== 0) {
+      return;
+    }
+
     window.addEventListener("pointermove", handleChange);
     window.addEventListener("pointerup", handlePointerUp);
   };
