@@ -144,6 +144,8 @@ const ProgressBar = ({
       return;
     }
 
+    handleChange(event);
+
     onDragStart();
 
     window.addEventListener("pointermove", handleChange);
@@ -161,7 +163,6 @@ const ProgressBar = ({
     <div onPointerDown={handlePointerDown} className="relative select-none">
       <div
         ref={barRef}
-        onClick={handleChange}
         className="relative h-1 overflow-hidden rounded bg-slate-300 hover:cursor-pointer"
       >
         <div style={{ width: position }} className="h-full bg-white" />
