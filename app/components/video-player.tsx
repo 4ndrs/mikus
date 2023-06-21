@@ -28,11 +28,7 @@ const VideoPlayer = (props: Props) => {
       // Update after x milliseconds
       const milliseconds = 300;
 
-      if (
-        lastUpdateRef.current === 0 ||
-        current === 0 ||
-        difference > milliseconds
-      ) {
+      if (difference < 0 || difference > milliseconds) {
         setProgress(current);
         lastUpdateRef.current = current;
       }
@@ -62,7 +58,6 @@ const VideoPlayer = (props: Props) => {
       return;
     }
 
-    lastUpdateRef.current = 0;
     videoRef.current.currentTime = value;
   };
 
