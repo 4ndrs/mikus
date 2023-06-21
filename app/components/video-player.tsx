@@ -57,7 +57,7 @@ const VideoPlayer = (props: Props) => {
     }
   };
 
-  const handleProgressBarClick = (value: number) => {
+  const handleProgressBarChange = (value: number) => {
     if (!videoRef.current) {
       return;
     }
@@ -80,7 +80,7 @@ const VideoPlayer = (props: Props) => {
         <ProgressBar
           max={duration}
           current={progress}
-          onClick={handleProgressBarClick}
+          onChange={handleProgressBarChange}
         />
 
         <div className="flex justify-center">
@@ -99,14 +99,14 @@ const VideoPlayer = (props: Props) => {
 type PbProps = {
   max: number;
   current: number;
-  onClick?: (value: number) => void;
+  onChange?: (value: number) => void;
 };
 
-const ProgressBar = ({ max, current, onClick }: PbProps) => {
+const ProgressBar = ({ max, current, onChange }: PbProps) => {
   const position = `${Math.ceil((current / max) * 100)}%`;
 
   const handleClick = (event: React.MouseEvent) => {
-    if (!onClick) {
+    if (!onChange) {
       return;
     }
 
@@ -115,7 +115,7 @@ const ProgressBar = ({ max, current, onClick }: PbProps) => {
     const percentage = (relativeX / rect.width) * 100;
     const value = (max * percentage) / 100;
 
-    onClick(+value.toFixed(3));
+    onChange(+value.toFixed(3));
   };
 
   return (
