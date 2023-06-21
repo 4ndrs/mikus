@@ -101,7 +101,7 @@ const ProgressBar = ({ max, current, onChange }: PbProps) => {
   const barRef = useRef<HTMLDivElement>(null);
   const position = `${((current / max) * 100).toFixed(3)}%`;
 
-  const handleChange = (event: React.MouseEvent) => {
+  const handleChange = (event: React.MouseEvent | MouseEvent) => {
     if (!barRef.current || event.clientX === 0) {
       return;
     }
@@ -114,8 +114,18 @@ const ProgressBar = ({ max, current, onChange }: PbProps) => {
     onChange(value);
   };
 
+  const handlePointerDown = () => {
+    window.addEventListener("pointermove", handleChange);
+    window.addEventListener("pointerup", handlePointerUp);
+  };
+
+  const handlePointerUp = () => {
+    window.removeEventListener("pointermove", handleChange);
+    window.removeEventListener("pointerup", handlePointerUp);
+  };
+
   return (
-    <div className="relative">
+    <div onPointerDown={handlePointerDown} className="relative">
       <div
         ref={barRef}
         onClick={handleChange}
@@ -124,7 +134,6 @@ const ProgressBar = ({ max, current, onChange }: PbProps) => {
         <div style={{ width: position }} className="h-full bg-white" />
       </div>
       <div
-        onDrag={handleChange}
         style={{ left: position }}
         className="absolute -top-1/3 h-4 w-4 -translate-x-1/2 -translate-y-1/3 cursor-pointer rounded-full border-[3px] border-white bg-slate-300"
       />
