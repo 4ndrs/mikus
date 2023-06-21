@@ -43,7 +43,7 @@ const VideoPlayer = (props: Props) => {
         className="h-full w-full"
       />
 
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center bg-black/20 bg-slate-600 p-2 [&_svg]:text-[2rem] [&_svg]:text-white">
+      <div className="absolute bottom-0 left-0 right-0 flex justify-center bg-black/20 p-2 [&_svg]:text-[2rem] [&_svg]:text-white">
         <button
           aria-label={`${isPlaying ? "pause" : "play"} video`}
           onClick={handleToggle}
