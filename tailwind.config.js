@@ -6,7 +6,16 @@ module.exports = {
     "./app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        miku: {
+          1: "#75e3d1",
+          2: "#43a0b1",
+          3: "#46bfcc",
+          4: "#2d858d",
+        },
+      },
+    },
   },
   plugins: [],
 };
