@@ -12,6 +12,7 @@ const VideoPlayer = (props: Props) => {
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const lastUpdateRef = useRef(0);
+  const lastPlayingStateRef = useRef(false);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -61,6 +62,20 @@ const VideoPlayer = (props: Props) => {
     videoRef.current.currentTime = value;
   };
 
+  const handleDragStart = () => {
+    if (isPlaying) {
+      videoRef.current?.pause();
+      lastPlayingStateRef.current = true;
+    }
+  };
+
+  const handleDragEnd = () => {
+    if (lastPlayingStateRef.current) {
+      videoRef.current?.play();
+      lastPlayingStateRef.current = false;
+    }
+  };
+
   return (
     <div className={props.className + " relative"}>
       <video
@@ -76,6 +91,8 @@ const VideoPlayer = (props: Props) => {
           max={duration}
           current={progress}
           onChange={handleProgressBarChange}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
         />
 
         <div className="flex justify-center">
@@ -95,9 +112,17 @@ type PbProps = {
   max: number;
   current: number;
   onChange: (value: number) => void;
+  onDragStart: () => void;
+  onDragEnd: () => void;
 };
 
-const ProgressBar = ({ max, current, onChange }: PbProps) => {
+const ProgressBar = ({
+  max,
+  current,
+  onChange,
+  onDragStart,
+  onDragEnd,
+}: PbProps) => {
   const barRef = useRef<HTMLDivElement>(null);
   const position = `${((current / max) * 100).toFixed(3)}%`;
 
@@ -119,6 +144,8 @@ const ProgressBar = ({ max, current, onChange }: PbProps) => {
       return;
     }
 
+    onDragStart();
+
     window.addEventListener("pointermove", handleChange);
     window.addEventListener("pointerup", handlePointerUp);
   };
@@ -126,6 +153,8 @@ const ProgressBar = ({ max, current, onChange }: PbProps) => {
   const handlePointerUp = () => {
     window.removeEventListener("pointermove", handleChange);
     window.removeEventListener("pointerup", handlePointerUp);
+
+    onDragEnd();
   };
 
   return (
