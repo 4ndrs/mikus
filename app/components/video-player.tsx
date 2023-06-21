@@ -128,7 +128,7 @@ const ProgressBar = ({ max, current, onClick }: PbProps) => {
       </div>
       <div
         style={{ left: position }}
-        className="absolute -top-1/3 h-4 w-4 -translate-y-1/3 rounded-full border-[3px] border-white bg-slate-300"
+        className="absolute -top-1/3 h-4 w-4 -translate-x-1/2 -translate-y-1/3 rounded-full border-[3px] border-white bg-slate-300"
       />
     </div>
   );
