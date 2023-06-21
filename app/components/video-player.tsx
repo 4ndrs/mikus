@@ -158,7 +158,7 @@ const ProgressBar = ({
   };
 
   return (
-    <div onPointerDown={handlePointerDown} className="relative">
+    <div onPointerDown={handlePointerDown} className="relative select-none">
       <div
         ref={barRef}
         onClick={handleChange}
