@@ -160,16 +160,19 @@ const ProgressBar = ({
   };
 
   return (
-    <div onPointerDown={handlePointerDown} className="relative select-none">
+    <div
+      onPointerDown={handlePointerDown}
+      className="relative select-none pt-2 hover:cursor-pointer"
+    >
       <div
         ref={barRef}
-        className="relative h-1 overflow-hidden rounded bg-slate-300 hover:cursor-pointer"
+        className="relative h-1 overflow-hidden rounded bg-slate-300"
       >
         <div style={{ width: position }} className="h-full bg-white" />
       </div>
       <div
         style={{ left: position }}
-        className="absolute -top-1/3 h-4 w-4 -translate-x-1/2 -translate-y-1/3 cursor-pointer rounded-full border-[3px] border-white bg-slate-300"
+        className="absolute -top-1/3 h-4 w-4 -translate-x-1/2 translate-y-1/3 cursor-pointer rounded-full border-[3px] border-white bg-slate-300"
       />
     </div>
   );
