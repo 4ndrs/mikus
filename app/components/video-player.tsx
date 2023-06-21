@@ -123,12 +123,10 @@ const VideoPlayer = (props: Props) => {
           >
             {isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
           </button>
-          <button
-            onClick={handleToggleMute}
-            className="absolute right-2 [&_svg]:text-[1.6rem]"
-          >
-            {muted ? <SoundOutlined /> : <SoundFilled />}
-          </button>
+
+          <div className="absolute right-2 [&_svg]:text-[1.6rem]">
+            <Sound muted={muted} onClick={handleToggleMute} />
+          </div>
         </div>
       </div>
     </div>
@@ -202,6 +200,16 @@ const ProgressBar = ({
         className="absolute -top-1/3 h-4 w-4 -translate-x-1/2 translate-y-1/3 cursor-pointer rounded-full border-[3px] border-white bg-slate-300"
       />
     </div>
+  );
+};
+
+type SProps = { muted: boolean; onClick: () => void };
+
+const Sound = ({ muted, onClick }: SProps) => {
+  return (
+    <button onClick={onClick}>
+      {muted ? <SoundOutlined /> : <SoundFilled />}
+    </button>
   );
 };
 
