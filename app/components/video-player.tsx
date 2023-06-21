@@ -98,7 +98,7 @@ type PbProps = {
 };
 
 const ProgressBar = ({ max, current, onChange }: PbProps) => {
-  const position = `${Math.ceil((current / max) * 100)}%`;
+  const position = `${((current / max) * 100).toFixed(3)}%`;
 
   const handleClick = (event: React.MouseEvent) => {
     if (!onChange) {
