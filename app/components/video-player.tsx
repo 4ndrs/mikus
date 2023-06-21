@@ -11,6 +11,7 @@ const VideoPlayer = (props: Props) => {
   const [progress, setProgress] = useState(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const lastUpdateRef = useRef(0);
 
   useEffect(() => {
     const videoElement = videoRef.current;
@@ -19,7 +20,23 @@ const VideoPlayer = (props: Props) => {
 
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
-    const handleTimeUpdate = () => setProgress(videoElement?.currentTime || 0);
+
+    const handleTimeUpdate = () => {
+      const current = videoElement?.currentTime || 0;
+      const difference = (current - lastUpdateRef.current) * 1000;
+
+      // Update after x milliseconds
+      const milliseconds = 300;
+
+      if (
+        lastUpdateRef.current === 0 ||
+        current === 0 ||
+        difference > milliseconds
+      ) {
+        setProgress(current);
+        lastUpdateRef.current = current;
+      }
+    };
 
     videoElement?.addEventListener("play", handlePlay);
     videoElement?.addEventListener("pause", handlePause);
