@@ -94,36 +94,39 @@ const VideoPlayer = (props: Props) => {
 type PbProps = {
   max: number;
   current: number;
-  onChange?: (value: number) => void;
+  onChange: (value: number) => void;
 };
 
 const ProgressBar = ({ max, current, onChange }: PbProps) => {
+  const barRef = useRef<HTMLDivElement>(null);
   const position = `${((current / max) * 100).toFixed(3)}%`;
 
-  const handleClick = (event: React.MouseEvent) => {
-    if (!onChange) {
+  const handleChange = (event: React.MouseEvent) => {
+    if (!barRef.current || event.clientX === 0) {
       return;
     }
 
-    const rect = event.currentTarget.getBoundingClientRect();
-    const relativeX = event.clientX - rect.left;
-    const percentage = (relativeX / rect.width) * 100;
-    const value = (max * percentage) / 100;
+    const barRect = barRef.current.getBoundingClientRect();
+    const relativeX = event.clientX - barRect.left;
+    const percentage = (relativeX / barRect.width) * 100;
+    const value = +((max * percentage) / 100).toFixed(3);
 
-    onChange(+value.toFixed(3));
+    onChange(value);
   };
 
   return (
     <div className="relative">
       <div
-        onClick={handleClick}
-        className="relative h-1 overflow-hidden rounded bg-slate-300 hover:scale-y-105"
+        ref={barRef}
+        onClick={handleChange}
+        className="relative h-1 overflow-hidden rounded bg-slate-300 hover:cursor-pointer"
       >
         <div style={{ width: position }} className="h-full bg-white" />
       </div>
       <div
+        onDrag={handleChange}
         style={{ left: position }}
-        className="absolute -top-1/3 h-4 w-4 -translate-x-1/2 -translate-y-1/3 rounded-full border-[3px] border-white bg-slate-300"
+        className="absolute -top-1/3 h-4 w-4 -translate-x-1/2 -translate-y-1/3 cursor-pointer rounded-full border-[3px] border-white bg-slate-300"
       />
     </div>
   );
