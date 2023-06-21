@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PauseCircleOutlined, PlayCircleOutlined } from "@ant-design/icons";
+
+import {
+  PauseCircleOutlined,
+  PlayCircleOutlined,
+  SoundOutlined,
+  SoundFilled,
+} from "@ant-design/icons";
 
 type Props = { src: string; className?: string; loop?: boolean };
 
@@ -9,6 +15,7 @@ const VideoPlayer = (props: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [muted, setMuted] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const lastUpdateRef = useRef(0);
@@ -76,6 +83,20 @@ const VideoPlayer = (props: Props) => {
     }
   };
 
+  const handleToggleMute = () => {
+    if (!videoRef.current) {
+      return;
+    }
+
+    if (muted) {
+      videoRef.current.muted = false;
+      setMuted(false);
+    } else {
+      videoRef.current.muted = true;
+      setMuted(true);
+    }
+  };
+
   return (
     <div className={props.className + " relative"}>
       <video
@@ -101,6 +122,12 @@ const VideoPlayer = (props: Props) => {
             onClick={handleToggle}
           >
             {isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+          </button>
+          <button
+            onClick={handleToggleMute}
+            className="absolute right-2 [&_svg]:text-[1.6rem]"
+          >
+            {muted ? <SoundOutlined /> : <SoundFilled />}
           </button>
         </div>
       </div>
