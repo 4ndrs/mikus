@@ -7,21 +7,28 @@ type Props = { src: string; className?: string; loop?: boolean };
 
 const VideoPlayer = (props: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [progress, setProgress] = useState(0);
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     const videoElement = videoRef.current;
 
+    setDuration(videoElement?.duration || 0);
+
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
+    const handleTimeUpdate = () => setProgress(videoElement?.currentTime || 0);
 
     videoElement?.addEventListener("play", handlePlay);
     videoElement?.addEventListener("pause", handlePause);
+    videoElement?.addEventListener("timeupdate", handleTimeUpdate);
 
     return () => {
       videoElement?.removeEventListener("play", handlePlay);
       videoElement?.removeEventListener("pause", handlePause);
+      videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
     };
   }, []);
 
@@ -43,14 +50,34 @@ const VideoPlayer = (props: Props) => {
         className="h-full w-full"
       />
 
-      <div className="absolute bottom-0 left-0 right-0 flex justify-center bg-black/20 p-2 [&_svg]:text-[2rem] [&_svg]:text-white">
-        <button
-          aria-label={`${isPlaying ? "pause" : "play"} video`}
-          onClick={handleToggle}
-        >
-          {isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
-        </button>
+      <div className="absolute bottom-0 left-0 right-0 mx-6 flex flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[2rem] [&_svg]:text-white">
+        <ProgressBar max={duration} current={progress} />
+
+        <div className="flex justify-center">
+          <button
+            aria-label={`${isPlaying ? "pause" : "play"} video`}
+            onClick={handleToggle}
+          >
+            {isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+          </button>
+        </div>
       </div>
+    </div>
+  );
+};
+
+const ProgressBar = ({ max, current }: { max: number; current: number }) => {
+  const position = `${Math.ceil((current / max) * 100)}%`;
+
+  return (
+    <div className="relative">
+      <div className="relative h-1 overflow-hidden rounded bg-slate-300">
+        <div style={{ width: position }} className="h-full bg-white" />
+      </div>
+      <div
+        style={{ left: position }}
+        className="absolute -top-1/3 h-4 w-4 -translate-y-1/3 rounded-full border-[3px] border-white bg-slate-300"
+      />
     </div>
   );
 };
