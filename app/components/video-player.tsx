@@ -57,6 +57,15 @@ const VideoPlayer = (props: Props) => {
     }
   };
 
+  const handleProgressBarClick = (value: number) => {
+    if (!videoRef.current) {
+      return;
+    }
+
+    lastUpdateRef.current = 0;
+    videoRef.current.currentTime = value;
+  };
+
   return (
     <div className={props.className + " relative"}>
       <video
@@ -68,7 +77,11 @@ const VideoPlayer = (props: Props) => {
       />
 
       <div className="absolute bottom-0 left-0 right-0 mx-6 flex flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[2rem] [&_svg]:text-white">
-        <ProgressBar max={duration} current={progress} />
+        <ProgressBar
+          max={duration}
+          current={progress}
+          onClick={handleProgressBarClick}
+        />
 
         <div className="flex justify-center">
           <button
@@ -83,12 +96,34 @@ const VideoPlayer = (props: Props) => {
   );
 };
 
-const ProgressBar = ({ max, current }: { max: number; current: number }) => {
+type PbProps = {
+  max: number;
+  current: number;
+  onClick?: (value: number) => void;
+};
+
+const ProgressBar = ({ max, current, onClick }: PbProps) => {
   const position = `${Math.ceil((current / max) * 100)}%`;
+
+  const handleClick = (event: React.MouseEvent) => {
+    if (!onClick) {
+      return;
+    }
+
+    const rect = event.currentTarget.getBoundingClientRect();
+    const relativeX = event.clientX - rect.left;
+    const percentage = (relativeX / rect.width) * 100;
+    const value = (max * percentage) / 100;
+
+    onClick(+value.toFixed(3));
+  };
 
   return (
     <div className="relative">
-      <div className="relative h-1 overflow-hidden rounded bg-slate-300">
+      <div
+        onClick={handleClick}
+        className="relative h-1 overflow-hidden rounded bg-slate-300 hover:scale-y-105"
+      >
         <div style={{ width: position }} className="h-full bg-white" />
       </div>
       <div
