@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
+  isPlaying: boolean;
 };
 
-const ProgressBar = ({ videoRef }: Props) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   const [duration, setDuration] = useState(0);
   const [progress, setProgress] = useState(0);
 
@@ -20,9 +20,6 @@ const ProgressBar = ({ videoRef }: Props) => {
 
     setDuration(videoElement?.duration || 0);
 
-    const handlePlay = () => setIsPlaying(true);
-    const handlePause = () => setIsPlaying(false);
-
     const handleTimeUpdate = () => {
       const current = videoElement?.currentTime || 0;
       const difference = (current - lastUpdateRef.current) * 1000;
@@ -36,13 +33,9 @@ const ProgressBar = ({ videoRef }: Props) => {
       }
     };
 
-    videoElement?.addEventListener("play", handlePlay);
-    videoElement?.addEventListener("pause", handlePause);
     videoElement?.addEventListener("timeupdate", handleTimeUpdate);
 
     return () => {
-      videoElement?.removeEventListener("play", handlePlay);
-      videoElement?.removeEventListener("pause", handlePause);
       videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
     };
   }, [videoRef]);

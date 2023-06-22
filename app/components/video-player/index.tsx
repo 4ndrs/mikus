@@ -47,7 +47,7 @@ const VideoPlayer = (props: Props) => {
       />
 
       <div className="absolute bottom-0 left-0 right-0 mx-6 flex flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[2rem] [&_svg]:text-white">
-        <ProgressBar videoRef={videoRef} />
+        <ProgressBar videoRef={videoRef} isPlaying />
 
         <div className="flex justify-center">
           <button
