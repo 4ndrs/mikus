@@ -15,6 +15,8 @@ const Sound = ({ videoRef }: Props) => {
   useEffect(() => {
     const videoElement = videoRef.current;
 
+    setVolume(videoElement?.volume || 0);
+
     const handleVolumeChange = () => setVolume(videoElement?.volume || 0);
 
     videoElement?.addEventListener("volumechange", handleVolumeChange);
