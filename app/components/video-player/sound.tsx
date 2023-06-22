@@ -1,20 +1,44 @@
 import { SoundFilled, SoundOutlined } from "@ant-design/icons";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-type Props = {
-  muted: boolean;
-  current: number;
-  onClick: () => void;
-  onChange: (value: number) => void;
-};
+type Props = { videoRef: React.RefObject<HTMLVideoElement> };
 
-const Sound = ({ muted, onClick, current, onChange }: Props) => {
-  const position = `${current * 100}%`;
+const Sound = ({ videoRef }: Props) => {
+  const [volume, setVolume] = useState(0);
+  const [muted, setMuted] = useState(false);
+
+  const position = `${volume * 100}%`;
   const barRef = useRef<HTMLDivElement>(null);
   const max = 1.0;
 
+  useEffect(() => {
+    const videoElement = videoRef.current;
+
+    const handleVolumeChange = () => setVolume(videoElement?.volume || 0);
+
+    videoElement?.addEventListener("volumechange", handleVolumeChange);
+
+    return () => {
+      videoElement?.removeEventListener("volumechange", handleVolumeChange);
+    };
+  }, [videoRef]);
+
+  const handleToggleMute = () => {
+    if (!videoRef.current) {
+      return;
+    }
+
+    if (muted) {
+      videoRef.current.muted = false;
+      setMuted(false);
+    } else {
+      videoRef.current.muted = true;
+      setMuted(true);
+    }
+  };
+
   const handleChange = (event: React.MouseEvent | MouseEvent) => {
-    if (!barRef.current || event.clientY === 0) {
+    if (!videoRef.current || !barRef.current || event.clientY === 0) {
       return;
     }
 
@@ -23,7 +47,7 @@ const Sound = ({ muted, onClick, current, onChange }: Props) => {
     const percentage = (relativeY / barRect.height) * 100;
     const value = +((max * percentage) / 100).toFixed(3);
 
-    onChange(value > 1 ? 1 : value < 0 ? 0 : value);
+    videoRef.current.volume = value > 1 ? 1 : value < 0 ? 0 : value;
   };
 
   const handlePointerDown = (event: React.MouseEvent) => {
@@ -59,7 +83,7 @@ const Sound = ({ muted, onClick, current, onChange }: Props) => {
         </div>
       </div>
 
-      <button onClick={onClick}>
+      <button onClick={handleToggleMute}>
         {muted ? <SoundOutlined /> : <SoundFilled />}
       </button>
     </div>

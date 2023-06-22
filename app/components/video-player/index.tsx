@@ -12,8 +12,6 @@ const VideoPlayer = (props: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [duration, setDuration] = useState(0);
   const [progress, setProgress] = useState(0);
-  const [volume, setVolume] = useState(0);
-  const [muted, setMuted] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
   const lastUpdateRef = useRef(0);
@@ -26,7 +24,6 @@ const VideoPlayer = (props: Props) => {
 
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
-    const handleVolumeChange = () => setVolume(videoElement?.volume || 0);
 
     const handleTimeUpdate = () => {
       const current = videoElement?.currentTime || 0;
@@ -44,13 +41,11 @@ const VideoPlayer = (props: Props) => {
     videoElement?.addEventListener("play", handlePlay);
     videoElement?.addEventListener("pause", handlePause);
     videoElement?.addEventListener("timeupdate", handleTimeUpdate);
-    videoElement?.addEventListener("volumechange", handleVolumeChange);
 
     return () => {
       videoElement?.removeEventListener("play", handlePlay);
       videoElement?.removeEventListener("pause", handlePause);
       videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
-      videoElement?.removeEventListener("volumechange", handleVolumeChange);
     };
   }, []);
 
@@ -84,28 +79,6 @@ const VideoPlayer = (props: Props) => {
     }
   };
 
-  const handleToggleMute = () => {
-    if (!videoRef.current) {
-      return;
-    }
-
-    if (muted) {
-      videoRef.current.muted = false;
-      setMuted(false);
-    } else {
-      videoRef.current.muted = true;
-      setMuted(true);
-    }
-  };
-
-  const handleVolumeChange = (value: number) => {
-    if (!videoRef.current) {
-      return;
-    }
-
-    videoRef.current.volume = value;
-  };
-
   return (
     <div className={props.className + " relative"}>
       <video
@@ -134,12 +107,7 @@ const VideoPlayer = (props: Props) => {
           </button>
 
           <div className="absolute right-2 [&_svg]:text-[1.6rem]">
-            <Sound
-              muted={muted}
-              current={volume}
-              onChange={handleVolumeChange}
-              onClick={handleToggleMute}
-            />
+            <Sound videoRef={videoRef} />
           </div>
         </div>
       </div>
