@@ -1,34 +1,63 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
-  max: number;
-  current: number;
-  onChange: (value: number) => void;
-  onDragStart: () => void;
-  onDragEnd: () => void;
+  videoRef: React.RefObject<HTMLVideoElement>;
 };
 
-const ProgressBar = ({
-  max,
-  current,
-  onChange,
-  onDragStart,
-  onDragEnd,
-}: Props) => {
+const ProgressBar = ({ videoRef }: Props) => {
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [duration, setDuration] = useState(0);
+  const [progress, setProgress] = useState(0);
+
   const barRef = useRef<HTMLDivElement>(null);
-  const position = `${((current / max) * 100).toFixed(3)}%`;
+  const lastUpdateRef = useRef(0);
+  const lastPlayingStateRef = useRef(false);
+
+  const position = `${((progress / duration) * 100).toFixed(3)}%`;
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+
+    setDuration(videoElement?.duration || 0);
+
+    const handlePlay = () => setIsPlaying(true);
+    const handlePause = () => setIsPlaying(false);
+
+    const handleTimeUpdate = () => {
+      const current = videoElement?.currentTime || 0;
+      const difference = (current - lastUpdateRef.current) * 1000;
+
+      // Update after x milliseconds
+      const milliseconds = 300;
+
+      if (difference < 0 || difference > milliseconds) {
+        setProgress(current);
+        lastUpdateRef.current = current;
+      }
+    };
+
+    videoElement?.addEventListener("play", handlePlay);
+    videoElement?.addEventListener("pause", handlePause);
+    videoElement?.addEventListener("timeupdate", handleTimeUpdate);
+
+    return () => {
+      videoElement?.removeEventListener("play", handlePlay);
+      videoElement?.removeEventListener("pause", handlePause);
+      videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
+    };
+  }, [videoRef]);
 
   const handleChange = (event: React.MouseEvent | MouseEvent) => {
-    if (!barRef.current || event.clientX === 0) {
+    if (!videoRef.current || !barRef.current || event.clientX === 0) {
       return;
     }
 
     const barRect = barRef.current.getBoundingClientRect();
     const relativeX = event.clientX - barRect.left;
     const percentage = (relativeX / barRect.width) * 100;
-    const value = +((max * percentage) / 100).toFixed(3);
+    const value = +((duration * percentage) / 100).toFixed(3);
 
-    onChange(value);
+    videoRef.current.currentTime = value;
   };
 
   const handlePointerDown = (event: React.MouseEvent) => {
@@ -38,7 +67,10 @@ const ProgressBar = ({
 
     handleChange(event);
 
-    onDragStart();
+    if (isPlaying) {
+      videoRef.current?.pause();
+      lastPlayingStateRef.current = true;
+    }
 
     window.addEventListener("pointermove", handleChange);
     window.addEventListener("pointerup", handlePointerUp);
@@ -48,7 +80,10 @@ const ProgressBar = ({
     window.removeEventListener("pointermove", handleChange);
     window.removeEventListener("pointerup", handlePointerUp);
 
-    onDragEnd();
+    if (lastPlayingStateRef.current) {
+      videoRef.current?.play();
+      lastPlayingStateRef.current = false;
+    }
   };
 
   return (
