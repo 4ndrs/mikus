@@ -47,7 +47,8 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
 
     const barRect = barRef.current.getBoundingClientRect();
     const relativeX = event.clientX - barRect.left;
-    const percentage = relativeX / barRect.width;
+    const tmp = relativeX / barRect.width;
+    const percentage = tmp > 1 ? 1 : tmp < 0 ? 0 : tmp;
     const value = +(duration * percentage).toFixed(3);
 
     videoRef.current.currentTime = value;

@@ -44,10 +44,11 @@ const Sound = ({ videoRef }: Props) => {
 
     const barRect = barRef.current.getBoundingClientRect();
     const relativeY = barRect.bottom - event.clientY;
-    const percentage = relativeY / barRect.height;
+    const tmp = relativeY / barRect.height;
+    const percentage = tmp > 1 ? 1 : tmp < 0 ? 0 : tmp;
     const value = +(max * percentage).toFixed(3);
 
-    videoRef.current.volume = value > 1 ? 1 : value < 0 ? 0 : value;
+    videoRef.current.volume = value;
   };
 
   const handlePointerDown = (event: React.MouseEvent) => {
