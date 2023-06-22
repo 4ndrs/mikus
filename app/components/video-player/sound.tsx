@@ -5,7 +5,8 @@ type Props = { videoRef: React.RefObject<HTMLVideoElement> };
 
 const Sound = ({ videoRef }: Props) => {
   const [volume, setVolume] = useState(0);
-  const [muted, setMuted] = useState(false);
+
+  const lastVolumeState = useRef(0);
 
   const position = `${volume * 100}%`;
   const barRef = useRef<HTMLDivElement>(null);
@@ -28,12 +29,11 @@ const Sound = ({ videoRef }: Props) => {
       return;
     }
 
-    if (muted) {
-      videoRef.current.muted = false;
-      setMuted(false);
+    if (volume === 0) {
+      videoRef.current.volume = lastVolumeState.current;
     } else {
-      videoRef.current.muted = true;
-      setMuted(true);
+      lastVolumeState.current = volume;
+      videoRef.current.volume = 0;
     }
   };
 
@@ -85,7 +85,7 @@ const Sound = ({ videoRef }: Props) => {
       </div>
 
       <button onClick={handleToggleMute}>
-        {muted ? <SoundOutlined /> : <SoundFilled />}
+        {volume === 0 ? <SoundOutlined /> : <SoundFilled />}
       </button>
     </div>
   );
