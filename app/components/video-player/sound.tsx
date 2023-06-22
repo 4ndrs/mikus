@@ -44,8 +44,8 @@ const Sound = ({ videoRef }: Props) => {
 
     const barRect = barRef.current.getBoundingClientRect();
     const relativeY = barRect.bottom - event.clientY;
-    const percentage = (relativeY / barRect.height) * 100;
-    const value = +((max * percentage) / 100).toFixed(3);
+    const percentage = relativeY / barRect.height;
+    const value = +(max * percentage).toFixed(3);
 
     videoRef.current.volume = value > 1 ? 1 : value < 0 ? 0 : value;
   };
