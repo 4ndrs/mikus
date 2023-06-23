@@ -37,13 +37,13 @@ const VideoPlayer = (props: Props) => {
   };
 
   return (
-    <div className={props.className + " relative"}>
+    <div className={props.className + " relative bg-black"}>
       <video
         loop={props.loop}
         ref={videoRef}
         src={props.src}
         onClick={handleToggle}
-        className="h-full w-full"
+        className="mx-auto h-full"
       />
 
       <div className="absolute bottom-0 left-0 right-0 mx-6 flex flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[1.4rem] [&_svg]:text-white">
