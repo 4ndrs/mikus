@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { PauseCircleOutlined, PlayCircleOutlined } from "@ant-design/icons";
+import { CaretRightFilled, PauseOutlined } from "@ant-design/icons";
 
 import ProgressBar from "./progress-bar";
 import Sound from "./sound";
@@ -46,7 +46,7 @@ const VideoPlayer = (props: Props) => {
         className="h-full w-full"
       />
 
-      <div className="absolute bottom-0 left-0 right-0 mx-6 flex flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[2rem] [&_svg]:text-white">
+      <div className="absolute bottom-0 left-0 right-0 mx-6 flex flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[1.4rem] [&_svg]:text-white">
         <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
         <div className="flex justify-center">
@@ -54,10 +54,10 @@ const VideoPlayer = (props: Props) => {
             aria-label={`${isPlaying ? "pause" : "play"} video`}
             onClick={handleToggle}
           >
-            {isPlaying ? <PauseCircleOutlined /> : <PlayCircleOutlined />}
+            {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
           </button>
 
-          <div className="absolute right-2 [&_svg]:text-[1.6rem]">
+          <div className="absolute right-2">
             <Sound videoRef={videoRef} />
           </div>
         </div>
