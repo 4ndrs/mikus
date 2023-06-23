@@ -8,6 +8,7 @@ type Props = {
 const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   const [duration, setDuration] = useState(0);
   const [progress, setProgress] = useState(0);
+  const [movingBall, setMovingBall] = useState(false);
 
   const barRef = useRef<HTMLDivElement>(null);
   const lastUpdateRef = useRef(0);
@@ -66,6 +67,8 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
       lastPlayingStateRef.current = true;
     }
 
+    setMovingBall(true);
+
     window.addEventListener("pointermove", handleChange);
     window.addEventListener("pointerup", handlePointerUp);
   };
@@ -78,22 +81,23 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
       videoRef.current?.play();
       lastPlayingStateRef.current = false;
     }
+
+    setMovingBall(false);
   };
 
   return (
     <div
       onPointerDown={handlePointerDown}
-      className="relative select-none pt-2 hover:cursor-pointer"
+      className="group relative select-none pt-2 hover:cursor-pointer"
     >
-      <div
-        ref={barRef}
-        className="relative h-1 overflow-hidden rounded bg-slate-300"
-      >
+      <div ref={barRef} className="relative h-1 bg-slate-300">
         <div style={{ width: position }} className="h-full bg-white" />
       </div>
       <div
         style={{ left: position }}
-        className="absolute -top-1/3 h-4 w-4 -translate-x-1/2 translate-y-1/3 cursor-pointer rounded-full border-[3px] border-white bg-slate-300"
+        className={`absolute -top-1/3 ${
+          movingBall ? "block" : "hidden"
+        } h-4 w-4 -translate-x-1/2 translate-y-1/3 cursor-pointer rounded-full border-[3px] border-white bg-slate-300 group-hover:block`}
       />
     </div>
   );
