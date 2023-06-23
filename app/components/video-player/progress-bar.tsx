@@ -90,7 +90,12 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
       onPointerDown={handlePointerDown}
       className="group relative select-none pt-2 hover:cursor-pointer"
     >
-      <div ref={barRef} className="relative h-1 bg-slate-300">
+      <div
+        ref={barRef}
+        className={`relative h-1 ${
+          movingBall ? "scale-y-150" : ""
+        } bg-slate-300 group-hover:scale-y-150`}
+      >
         <div style={{ width: position }} className="h-full bg-white" />
       </div>
       <div
