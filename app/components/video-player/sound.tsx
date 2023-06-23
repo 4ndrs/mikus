@@ -13,6 +13,10 @@ const Sound = ({ videoRef }: Props) => {
   const max = 1.0;
 
   useEffect(() => {
+    if (!videoRef.current) {
+      return;
+    }
+
     const videoElement = videoRef.current;
     const storedVolume = localStorage.getItem("defaultVolume");
 
@@ -22,22 +26,18 @@ const Sound = ({ videoRef }: Props) => {
         : 0.2
       : 0.2;
 
-    if (videoElement) {
-      videoElement.volume = defaultVolume;
-      setVolume(defaultVolume);
-    }
+    videoElement.volume = defaultVolume;
+    setVolume(defaultVolume);
 
     const handleVolumeChange = () => {
-      if (videoElement) {
-        setVolume(videoElement.volume);
-        localStorage.setItem("defaultVolume", videoElement.volume.toString());
-      }
+      setVolume(videoElement.volume);
+      localStorage.setItem("defaultVolume", videoElement.volume.toString());
     };
 
-    videoElement?.addEventListener("volumechange", handleVolumeChange);
+    videoElement.addEventListener("volumechange", handleVolumeChange);
 
     return () => {
-      videoElement?.removeEventListener("volumechange", handleVolumeChange);
+      videoElement.removeEventListener("volumechange", handleVolumeChange);
     };
   }, [videoRef]);
 
