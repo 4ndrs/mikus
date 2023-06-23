@@ -70,11 +70,14 @@ const Sound = ({ videoRef }: Props) => {
   };
 
   return (
-    <div className="relative select-none hover:cursor-pointer">
+    <div className="group relative select-none hover:cursor-pointer">
+      {/* hover helper to reach the volume level bar */}
+      <div className="absolute inset-x-0 -top-3 bottom-6 bg-transparent" />
+
       <div
         ref={barRef}
         onPointerDown={handlePointerDown}
-        className="absolute left-1/2 top-0 -translate-x-1/2 -translate-y-[calc(100%+10px)] rounded bg-slate-600 px-4 py-2"
+        className="absolute left-1/2 top-0 hidden -translate-x-1/2 -translate-y-[calc(100%+10px)] rounded bg-slate-600 px-4 py-2 group-hover:block"
       >
         <div className="relative h-14 w-[0.34rem] rounded bg-slate-700">
           <div
