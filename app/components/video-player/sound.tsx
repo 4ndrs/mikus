@@ -6,7 +6,7 @@ type Props = { videoRef: React.RefObject<HTMLVideoElement> };
 const Sound = ({ videoRef }: Props) => {
   const [volume, setVolume] = useState(0);
 
-  const lastVolumeState = useRef(0);
+  const lastVolumeState = useRef(0.2);
 
   const position = `${volume * 100}%`;
   const barRef = useRef<HTMLDivElement>(null);
