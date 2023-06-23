@@ -1,7 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { CaretRightFilled, PauseOutlined } from "@ant-design/icons";
+
+import {
+  CaretRightFilled,
+  PauseOutlined,
+  RetweetOutlined,
+} from "@ant-design/icons";
 
 import ProgressBar from "./progress-bar";
 import Sound from "./sound";
@@ -10,6 +15,7 @@ type Props = { src: string; className?: string; loop?: boolean };
 
 const VideoPlayer = (props: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
+  const [loop, setLoop] = useState(props.loop);
 
   const videoRef = useRef<HTMLVideoElement>(null);
 
@@ -36,6 +42,20 @@ const VideoPlayer = (props: Props) => {
     }
   };
 
+  const handleLoopToggle = () => {
+    if (!videoRef.current) {
+      return;
+    }
+
+    if (videoRef.current.loop) {
+      videoRef.current.loop = false;
+      setLoop(false);
+    } else {
+      videoRef.current.loop = true;
+      setLoop(true);
+    }
+  };
+
   return (
     <div className={props.className + " relative bg-black"}>
       <video
@@ -55,6 +75,13 @@ const VideoPlayer = (props: Props) => {
             onClick={handleToggle}
           >
             {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
+          </button>
+          <button
+            aria-label={`${loop ? "disable" : "activate"} loop`}
+            className={`${loop ? "" : "[&_svg]:text-slate-400"}`}
+            onClick={handleLoopToggle}
+          >
+            <RetweetOutlined />
           </button>
 
           <div className="absolute right-2">
