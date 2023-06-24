@@ -83,8 +83,8 @@ const VideoPlayer = (props: Props) => {
           left: menuPositionRef.current.x,
         }}
         className={`${
-          openMenu ? "block" : "hidden"
-        } fixed flex h-12 w-24 items-center justify-center gap-2 rounded bg-black`}
+          openMenu ? "flex" : "hidden"
+        } fixed h-12 w-24 items-center justify-center gap-2 rounded bg-black`}
       >
         <div
           onClick={() => {
