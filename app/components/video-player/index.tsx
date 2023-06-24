@@ -82,7 +82,11 @@ const VideoPlayer = (props: Props) => {
         loop={props.loop}
         ref={videoRef}
         src={props.src}
-        onClick={handlePlayToggle}
+        onClick={() => {
+          if (showControls) {
+            handlePlayToggle();
+          }
+        }}
         onContextMenu={handleContextMenu}
         className="mx-auto h-full"
       />
