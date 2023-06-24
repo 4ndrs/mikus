@@ -124,24 +124,24 @@ const VideoPlayer = (props: Props) => {
       >
         <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
-        <div className="flex justify-center">
-          <button
-            aria-label={`${isPlaying ? "pause" : "play"} video`}
-            onClick={handlePlayToggle}
-          >
-            {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
-          </button>
-          <button
-            aria-label={`${loop ? "disable" : "activate"} loop`}
-            className={`${loop ? "" : "text-slate-400"}`}
-            onClick={handleLoopToggle}
-          >
-            <RetweetOutlined />
-          </button>
-
-          <div className="absolute right-2">
-            <Sound videoRef={videoRef} />
+        <div className="flex justify-between">
+          <div>
+            <button
+              aria-label={`${isPlaying ? "pause" : "play"} video`}
+              onClick={handlePlayToggle}
+            >
+              {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
+            </button>
+            <button
+              aria-label={`${loop ? "disable" : "activate"} loop`}
+              className={`${loop ? "" : "text-slate-400"}`}
+              onClick={handleLoopToggle}
+            >
+              <RetweetOutlined />
+            </button>
           </div>
+
+          <Sound videoRef={videoRef} />
         </div>
       </div>
     </div>
