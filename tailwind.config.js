@@ -15,6 +15,15 @@ module.exports = {
           4: "#2d858d",
         },
       },
+      animation: {
+        "fade-in": "fade-in 250ms ease-out",
+      },
+      keyframes: {
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+      },
     },
   },
   plugins: [],

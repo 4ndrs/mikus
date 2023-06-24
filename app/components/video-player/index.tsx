@@ -98,7 +98,7 @@ const VideoPlayer = (props: Props) => {
       <div
         className={` ${
           isPlaying ? "hidden group-hover/player:flex" : "flex"
-        } absolute bottom-0 left-0 right-0 mx-6 flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[1.4rem] [&_svg]:text-white`}
+        } absolute bottom-0 left-0 right-0 mx-6 animate-fade-in flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[1.4rem] [&_svg]:text-white`}
       >
         <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
