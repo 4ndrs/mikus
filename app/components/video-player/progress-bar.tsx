@@ -20,6 +20,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
     const videoElement = videoRef.current;
 
     setDuration(videoElement?.duration || 1);
+    console.log("duration:", videoElement?.duration);
 
     const handleTimeUpdate = () => {
       const current = videoElement?.currentTime || 0;
@@ -34,7 +35,13 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
       }
     };
 
+    const handleDurationChange = () => {
+      setDuration(videoElement?.duration || 1);
+      console.log("duration change:", videoElement?.duration);
+    };
+
     videoElement?.addEventListener("timeupdate", handleTimeUpdate);
+    videoElement?.addEventListener("durationchange", handleDurationChange);
 
     return () => {
       videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
