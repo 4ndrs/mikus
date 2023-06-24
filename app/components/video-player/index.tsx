@@ -70,7 +70,10 @@ const VideoPlayer = (props: Props) => {
 
   return (
     <div
-      onMouseEnter={() => setShowControls(true)}
+      onMouseEnter={() => {
+        setHidingControls(false);
+        setShowControls(true);
+      }}
       onMouseLeave={() => {
         if (isPlaying) {
           setHidingControls(true);
