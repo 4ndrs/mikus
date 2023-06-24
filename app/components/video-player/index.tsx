@@ -85,6 +85,8 @@ const VideoPlayer = (props: Props) => {
         onClick={() => {
           if (showControls) {
             handlePlayToggle();
+          } else {
+            setShowControls(true);
           }
         }}
         onContextMenu={handleContextMenu}
