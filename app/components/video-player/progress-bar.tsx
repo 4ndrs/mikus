@@ -6,7 +6,7 @@ type Props = {
 };
 
 const ProgressBar = ({ videoRef, isPlaying }: Props) => {
-  const [duration, setDuration] = useState(0);
+  const [duration, setDuration] = useState(1);
   const [progress, setProgress] = useState(0);
   const [movingBall, setMovingBall] = useState(false);
 
@@ -19,7 +19,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   useEffect(() => {
     const videoElement = videoRef.current;
 
-    setDuration(videoElement?.duration || 0);
+    setDuration(videoElement?.duration || 1);
 
     const handleTimeUpdate = () => {
       const current = videoElement?.currentTime || 0;
