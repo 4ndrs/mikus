@@ -12,11 +12,9 @@ const TimeVisualizer = ({ videoRef }: Props) => {
     ).slice(-2)}`;
 
   return (
-    <div className="flex text-[1rem]">
+    <div className="flex text-[1rem] text-white">
       <div className="w-[3.1rem]">{parseTime(progress)}</div> /{" "}
-      <div className="w-[3.1rem] text-right text-slate-300">
-        {parseTime(duration)}
-      </div>
+      <div className="w-[3.1rem] text-right">{parseTime(duration)}</div>
     </div>
   );
 };
