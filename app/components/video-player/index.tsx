@@ -116,7 +116,7 @@ const VideoPlayer = (props: Props) => {
             : hidingControls
             ? "flex animate-fade-out"
             : "flex animate-fade-in"
-        } absolute bottom-0 left-0 right-0 mx-6 flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[1.4rem] [&_svg]:text-white`}
+        } absolute bottom-0 left-0 right-0 mx-6 flex-col gap-4 bg-black/20 p-2 text-[1.4rem] text-white`}
       >
         <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
@@ -129,7 +129,7 @@ const VideoPlayer = (props: Props) => {
           </button>
           <button
             aria-label={`${loop ? "disable" : "activate"} loop`}
-            className={`${loop ? "" : "[&_svg]:text-slate-400"}`}
+            className={`${loop ? "" : "text-slate-400"}`}
             onClick={handleLoopToggle}
           >
             <RetweetOutlined />
