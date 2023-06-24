@@ -1,37 +1,10 @@
-import { useDuration } from "@/app/hooks";
-import { useEffect, useRef, useState } from "react";
+import { useDuration, useProgress } from "@/app/hooks";
 
 type Props = { videoRef: React.RefObject<HTMLVideoElement> };
 
 const TimeVisualizer = ({ videoRef }: Props) => {
-  const [progress, setProgress] = useState(0);
-
   const duration = useDuration(videoRef);
-
-  const lastUpdateRef = useRef(0);
-
-  useEffect(() => {
-    const videoElement = videoRef.current;
-
-    const handleTimeUpdate = () => {
-      const current = videoElement?.currentTime || 0;
-      const difference = (current - lastUpdateRef.current) * 1000;
-
-      // Update after x milliseconds
-      const milliseconds = 300;
-
-      if (difference < 0 || difference > milliseconds) {
-        setProgress(current);
-        lastUpdateRef.current = current;
-      }
-    };
-
-    videoElement?.addEventListener("timeupdate", handleTimeUpdate);
-
-    return () => {
-      videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
-    };
-  }, [videoRef]);
+  const progress = useProgress(videoRef);
 
   const parseTime = (seconds: number) =>
     `${("0" + Math.floor(seconds / 60)).slice(-2)}:${(

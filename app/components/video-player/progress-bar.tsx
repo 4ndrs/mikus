@@ -1,5 +1,5 @@
-import { useDuration } from "@/app/hooks";
-import { useEffect, useRef, useState } from "react";
+import { useDuration, useProgress } from "@/app/hooks";
+import { useRef, useState } from "react";
 
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
@@ -7,41 +7,15 @@ type Props = {
 };
 
 const ProgressBar = ({ videoRef, isPlaying }: Props) => {
-  const [progress, setProgress] = useState(0);
   const [movingBall, setMovingBall] = useState(false);
 
   const duration = useDuration(videoRef);
+  const progress = useProgress(videoRef);
 
   const barRef = useRef<HTMLDivElement>(null);
-  const lastUpdateRef = useRef(0);
   const lastPlayingStateRef = useRef(false);
 
   const position = `${((progress / duration) * 100).toFixed(3)}%`;
-
-  useEffect(() => {
-    const videoElement = videoRef.current;
-
-    console.log("duration:", videoElement?.duration);
-
-    const handleTimeUpdate = () => {
-      const current = videoElement?.currentTime || 0;
-      const difference = (current - lastUpdateRef.current) * 1000;
-
-      // Update after x milliseconds
-      const milliseconds = 300;
-
-      if (difference < 0 || difference > milliseconds) {
-        setProgress(current);
-        lastUpdateRef.current = current;
-      }
-    };
-
-    videoElement?.addEventListener("timeupdate", handleTimeUpdate);
-
-    return () => {
-      videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
-    };
-  }, [videoRef]);
 
   const handleChange = (event: React.MouseEvent | MouseEvent) => {
     if (!videoRef.current || !barRef.current || event.clientX === 0) {
