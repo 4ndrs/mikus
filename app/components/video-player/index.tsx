@@ -9,6 +9,7 @@ import {
   RetweetOutlined,
 } from "@ant-design/icons";
 
+import TimeVisualizer from "./time-visualizer";
 import ProgressBar from "./progress-bar";
 import Sound from "./sound";
 
@@ -129,7 +130,9 @@ const VideoPlayer = (props: Props) => {
       >
         <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
+          <TimeVisualizer videoRef={videoRef} />
+
           <div>
             <button
               aria-label={`${isPlaying ? "pause" : "play"} video`}
