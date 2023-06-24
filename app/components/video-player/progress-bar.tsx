@@ -1,3 +1,4 @@
+import { useDuration } from "@/app/hooks";
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
@@ -6,9 +7,10 @@ type Props = {
 };
 
 const ProgressBar = ({ videoRef, isPlaying }: Props) => {
-  const [duration, setDuration] = useState(1);
   const [progress, setProgress] = useState(0);
   const [movingBall, setMovingBall] = useState(false);
+
+  const duration = useDuration(videoRef);
 
   const barRef = useRef<HTMLDivElement>(null);
   const lastUpdateRef = useRef(0);
@@ -19,7 +21,6 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   useEffect(() => {
     const videoElement = videoRef.current;
 
-    setDuration(videoElement?.duration || 1);
     console.log("duration:", videoElement?.duration);
 
     const handleTimeUpdate = () => {
@@ -35,13 +36,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
       }
     };
 
-    const handleDurationChange = () => {
-      setDuration(videoElement?.duration || 1);
-      console.log("duration change:", videoElement?.duration);
-    };
-
     videoElement?.addEventListener("timeupdate", handleTimeUpdate);
-    videoElement?.addEventListener("durationchange", handleDurationChange);
 
     return () => {
       videoElement?.removeEventListener("timeupdate", handleTimeUpdate);

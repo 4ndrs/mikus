@@ -1,17 +1,17 @@
+import { useDuration } from "@/app/hooks";
 import { useEffect, useRef, useState } from "react";
 
 type Props = { videoRef: React.RefObject<HTMLVideoElement> };
 
 const TimeVisualizer = ({ videoRef }: Props) => {
-  const [duration, setDuration] = useState(1);
   const [progress, setProgress] = useState(0);
+
+  const duration = useDuration(videoRef);
 
   const lastUpdateRef = useRef(0);
 
   useEffect(() => {
     const videoElement = videoRef.current;
-
-    setDuration(videoElement?.duration || 1);
 
     const handleTimeUpdate = () => {
       const current = videoElement?.currentTime || 0;
@@ -26,12 +26,7 @@ const TimeVisualizer = ({ videoRef }: Props) => {
       }
     };
 
-    const handleDurationChange = () => {
-      setDuration(videoElement?.duration || 1);
-    };
-
     videoElement?.addEventListener("timeupdate", handleTimeUpdate);
-    videoElement?.addEventListener("durationchange", handleDurationChange);
 
     return () => {
       videoElement?.removeEventListener("timeupdate", handleTimeUpdate);
