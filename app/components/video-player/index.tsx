@@ -67,7 +67,7 @@ const VideoPlayer = (props: Props) => {
   };
 
   return (
-    <div className={props.className + " relative bg-black"}>
+    <div className={props.className + " group/player relative bg-black"}>
       <video
         loop={props.loop}
         ref={videoRef}
@@ -95,7 +95,11 @@ const VideoPlayer = (props: Props) => {
         <HeartFilled className="text-red-600" /> Mikus
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 mx-6 flex flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[1.4rem] [&_svg]:text-white">
+      <div
+        className={` ${
+          isPlaying ? "hidden group-hover/player:flex" : "flex"
+        } absolute bottom-0 left-0 right-0 mx-6 flex-col gap-4 bg-black/20 p-2 [&_svg]:text-[1.4rem] [&_svg]:text-white`}
+      >
         <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
         <div className="flex justify-center">
