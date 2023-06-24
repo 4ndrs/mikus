@@ -37,7 +37,7 @@ const VideoPlayer = (props: Props) => {
     };
   }, []);
 
-  const handleToggle = () => {
+  const handlePlayToggle = () => {
     if (isPlaying) {
       videoRef.current?.pause();
     } else {
@@ -72,7 +72,7 @@ const VideoPlayer = (props: Props) => {
         loop={props.loop}
         ref={videoRef}
         src={props.src}
-        onClick={handleToggle}
+        onClick={handlePlayToggle}
         onContextMenu={handleContextMenu}
         className="mx-auto h-full"
       />
@@ -101,7 +101,7 @@ const VideoPlayer = (props: Props) => {
         <div className="flex justify-center">
           <button
             aria-label={`${isPlaying ? "pause" : "play"} video`}
-            onClick={handleToggle}
+            onClick={handlePlayToggle}
           >
             {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
           </button>
