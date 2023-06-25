@@ -1,6 +1,8 @@
 import { SoundFilled, SoundOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
 
+import Button from "./button";
+
 type Props = { videoRef: React.RefObject<HTMLVideoElement> };
 
 const Sound = ({ videoRef }: Props) => {
@@ -132,9 +134,9 @@ const Sound = ({ videoRef }: Props) => {
         </div>
       </div>
 
-      <button onClick={handleToggleMute} onTouchStart={handleIconTouch}>
+      <Button onClick={handleToggleMute} onTouchStart={handleIconTouch}>
         {volume === 0 ? <SoundOutlined /> : <SoundFilled />}
-      </button>
+      </Button>
     </div>
   );
 };

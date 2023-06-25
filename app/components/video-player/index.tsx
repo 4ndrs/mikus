@@ -11,6 +11,7 @@ import {
 
 import TimeVisualizer from "./time-visualizer";
 import ProgressBar from "./progress-bar";
+import Button from "./button";
 import Sound from "./sound";
 
 type Props = { src: string; className?: string; loop?: boolean };
@@ -126,27 +127,27 @@ const VideoPlayer = (props: Props) => {
             : hidingControls
             ? "flex animate-fade-out"
             : "flex animate-fade-in"
-        } absolute bottom-0 left-0 right-0 mx-6 flex-col gap-4 bg-black/20 p-2 text-[1.4rem] text-white`}
+        } absolute bottom-0 left-0 right-0 mx-6 flex-col gap-4 bg-black/20 p-2`}
       >
         <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
         <div className="flex items-center justify-between">
           <TimeVisualizer videoRef={videoRef} />
 
-          <div>
-            <button
+          <div className="flex gap-1">
+            <Button
               aria-label={`${isPlaying ? "pause" : "play"} video`}
               onClick={handlePlayToggle}
             >
               {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
-            </button>
-            <button
+            </Button>
+            <Button
               aria-label={`${loop ? "disable" : "activate"} loop`}
               className={`${loop ? "" : "text-slate-400"}`}
               onClick={handleLoopToggle}
             >
               <RetweetOutlined />
-            </button>
+            </Button>
           </div>
 
           <Sound videoRef={videoRef} />
