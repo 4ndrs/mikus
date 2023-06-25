@@ -32,12 +32,19 @@ const VideoPlayer = (props: Props) => {
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
 
+    const handleEnded = () => {
+      setHidingControls(false);
+      setShowControls(true);
+    };
+
     videoElement?.addEventListener("play", handlePlay);
     videoElement?.addEventListener("pause", handlePause);
+    videoElement?.addEventListener("ended", handleEnded);
 
     return () => {
       videoElement?.removeEventListener("play", handlePlay);
       videoElement?.removeEventListener("pause", handlePause);
+      videoElement?.removeEventListener("ended", handleEnded);
     };
   }, []);
 
