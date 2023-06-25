@@ -54,13 +54,20 @@ const Sound = ({ videoRef }: Props) => {
     }
   };
 
-  const handleChange = (event: React.MouseEvent | MouseEvent) => {
-    if (!videoRef.current || !barRef.current || event.clientY === 0) {
+  const handleChange = (event: React.MouseEvent | MouseEvent | TouchEvent) => {
+    if (
+      !videoRef.current ||
+      !barRef.current ||
+      ("clientY" in event && event.clientY === 0)
+    ) {
       return;
     }
 
+    const clientY =
+      "clientY" in event ? event.clientY : event.touches[0].clientY;
+
     const barRect = barRef.current.getBoundingClientRect();
-    const relativeY = barRect.bottom - event.clientY;
+    const relativeY = barRect.bottom - clientY;
     const tmp = relativeY / barRect.height;
     const percentage = tmp > 1 ? 1 : tmp < 0 ? 0 : tmp;
     const value = +(max * percentage).toFixed(3);
@@ -77,15 +84,19 @@ const Sound = ({ videoRef }: Props) => {
 
     window.addEventListener("pointermove", handleChange);
     window.addEventListener("pointerup", handlePointerUp);
+
+    window.addEventListener("touchmove", handleChange);
   };
 
   const handlePointerUp = () => {
     window.removeEventListener("pointermove", handleChange);
     window.removeEventListener("pointerup", handlePointerUp);
+
+    window.removeEventListener("touchmove", handleChange);
   };
 
   return (
-    <div className="group relative select-none hover:cursor-pointer">
+    <div className="group relative touch-none select-none hover:cursor-pointer">
       {/* hover helper to reach the volume level bar */}
       <div className="absolute inset-x-0 -top-3 bottom-6 bg-transparent" />
 
