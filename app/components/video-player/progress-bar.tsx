@@ -17,13 +17,20 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
 
   const position = `${((progress / duration) * 100).toFixed(3)}%`;
 
-  const handleChange = (event: React.MouseEvent | MouseEvent) => {
-    if (!videoRef.current || !barRef.current || event.clientX === 0) {
+  const handleChange = (event: React.MouseEvent | MouseEvent | TouchEvent) => {
+    if (
+      !videoRef.current ||
+      !barRef.current ||
+      ("clientX" in event && event.clientX === 0)
+    ) {
       return;
     }
 
+    const clientX =
+      "clientX" in event ? event.clientX : event.touches[0].clientX;
+
     const barRect = barRef.current.getBoundingClientRect();
-    const relativeX = event.clientX - barRect.left;
+    const relativeX = clientX - barRect.left;
     const tmp = relativeX / barRect.width;
     const percentage = tmp > 1 ? 1 : tmp < 0 ? 0 : tmp;
     const value = +(duration * percentage).toFixed(3);
@@ -32,6 +39,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   };
 
   const handlePointerDown = (event: React.MouseEvent) => {
+    // only main button allowed, usually left click
     if (event.button !== 0) {
       return;
     }
@@ -47,11 +55,15 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
 
     window.addEventListener("pointermove", handleChange);
     window.addEventListener("pointerup", handlePointerUp);
+
+    window.addEventListener("touchmove", handleChange);
   };
 
   const handlePointerUp = () => {
     window.removeEventListener("pointermove", handleChange);
     window.removeEventListener("pointerup", handlePointerUp);
+
+    window.removeEventListener("touchmove", handleChange);
 
     if (lastPlayingStateRef.current) {
       videoRef.current?.play();
