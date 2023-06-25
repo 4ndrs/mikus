@@ -1,14 +1,32 @@
-import path from "node:path";
-import { spawnSync } from "node:child_process";
+import { spawnSync } from "child_process";
+import { readdirSync, statSync } from "fs";
 
-const generateThumbnail = (filename: string) => {
-  const filePath = path.join("public", filename);
+import path from "path";
 
-  const process = spawnSync("ffmpeg", ["-hide_banner", "-i", filePath], {
-    encoding: "utf8",
-  });
+const generateThumbnails = () => {
+  const directory = "public";
 
-  return `stderr: ${process.stderr} :: error: ${process.error?.message}`;
+  const files = readdirSync(directory).filter(
+    (file) =>
+      statSync(path.join(directory, file)).isFile() &&
+      !file.includes(".thumbnail.png")
+  );
+
+  files.forEach((file) =>
+    spawnSync("ffmpeg", [
+      "-hide_banner",
+      "-i",
+      path.join(directory, file),
+      "-map",
+      "0:v",
+      "-v:frames",
+      "1",
+      "-vf",
+      "scale=-1:128:flags=lanczos",
+      `${path.join(directory, path.parse(file).name)}.thumbnail.png`,
+      "-n",
+    ])
+  );
 };
 
-export { generateThumbnail };
+export { generateThumbnails };
