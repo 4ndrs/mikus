@@ -7,8 +7,8 @@ const TimeVisualizer = ({ videoRef }: Props) => {
   const progress = useProgress(videoRef);
 
   const parseTime = (seconds: number) =>
-    `${("0" + Math.floor(seconds / 60)).slice(-2)}:${(
-      "0" + Math.floor(seconds % 60)
+    `${("0" + Math.floor((seconds || 0) / 60)).slice(-2)}:${(
+      "0" + Math.floor((seconds || 0) % 60)
     ).slice(-2)}`;
 
   return (
