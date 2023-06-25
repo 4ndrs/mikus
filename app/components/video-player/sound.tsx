@@ -54,7 +54,9 @@ const Sound = ({ videoRef }: Props) => {
     }
   };
 
-  const handleChange = (event: React.MouseEvent | MouseEvent | TouchEvent) => {
+  const handleChange = (
+    event: React.MouseEvent | React.TouchEvent | MouseEvent | TouchEvent
+  ) => {
     if (
       !videoRef.current ||
       !barRef.current ||
@@ -75,8 +77,9 @@ const Sound = ({ videoRef }: Props) => {
     videoRef.current.volume = value;
   };
 
-  const handlePointerDown = (event: React.MouseEvent) => {
-    if (event.button !== 0) {
+  const handlePointerDown = (event: React.MouseEvent | React.TouchEvent) => {
+    // allow only main button, usually left click
+    if ("button" in event && event.button !== 0) {
       return;
     }
 
@@ -93,6 +96,20 @@ const Sound = ({ videoRef }: Props) => {
     window.removeEventListener("pointerup", handlePointerUp);
 
     window.removeEventListener("touchmove", handleChange);
+  };
+
+  const handleIconTouch = async (event: React.TouchEvent) => {
+    // if it's not a "click" to toggle mute, control the audio up and down
+    // yes, this is a hack, TODO: find a better way
+    const id = setTimeout(() => handlePointerDown(event), 500);
+
+    const volume = videoRef.current?.volume;
+
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
+    if (volume !== videoRef.current?.volume) {
+      clearTimeout(id);
+    }
   };
 
   return (
@@ -115,7 +132,7 @@ const Sound = ({ videoRef }: Props) => {
         </div>
       </div>
 
-      <button onClick={handleToggleMute}>
+      <button onClick={handleToggleMute} onTouchStart={handleIconTouch}>
         {volume === 0 ? <SoundOutlined /> : <SoundFilled />}
       </button>
     </div>
