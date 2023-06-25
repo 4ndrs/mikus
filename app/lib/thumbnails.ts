@@ -1,13 +1,14 @@
+import path from "node:path";
 import { spawnSync } from "node:child_process";
 
-const generateThumbnail = (_filename: string) => {
-  const process = spawnSync("ls", ["public/"], { encoding: "utf8" });
+const generateThumbnail = (filename: string) => {
+  const filePath = path.join("public", filename);
 
-  if (process.status === 2) {
-    throw new Error(process.stderr);
-  }
+  const process = spawnSync("ffmpeg", ["-hide_banner", "-i", filePath], {
+    encoding: "utf8",
+  });
 
-  return process.stdout + ` ${Date.now()}`;
+  return process.stderr;
 };
 
 export { generateThumbnail };
