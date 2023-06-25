@@ -8,7 +8,7 @@ const generateThumbnail = (filename: string) => {
     encoding: "utf8",
   });
 
-  return process.stderr;
+  return `stderr: ${process.stderr} :: error: ${process.error?.message}`;
 };
 
 export { generateThumbnail };
