@@ -30,6 +30,12 @@ const videos = [
     duration: "00:21",
     thumbnail: "/MIKU.thumbnail.png",
   },
+  {
+    title: "Magical Candy ミカヅキBIGWAVE.webm",
+    src: "/Magical Candy ミカヅキBIGWAVE.webm",
+    duration: "00:22",
+    thumbnail: "/Magical Candy ミカヅキBIGWAVE.thumbnail.png",
+  },
 ];
 
 const Home = () => {
