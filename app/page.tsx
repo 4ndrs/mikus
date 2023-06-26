@@ -36,6 +36,12 @@ const videos = [
     duration: "00:22",
     thumbnail: "/Magical Candy ミカヅキBIGWAVE.thumbnail.png",
   },
+  {
+    title: "Astrophysics-Ms-Miku-After-Dark-cover.webm",
+    src: "/Astrophysics-Ms-Miku-After-Dark-cover.webm",
+    duration: "00:27",
+    thumbnail: "/Astrophysics-Ms-Miku-After-Dark-cover.thumbnail.png",
+  },
 ];
 
 const Home = () => {
