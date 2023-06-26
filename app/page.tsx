@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import Playlist from "./components/playlist";
 import VideoPlayer from "./components/video-player";
 
@@ -16,14 +20,18 @@ const videos = [
   },
 ];
 
-const Home = () => (
-  <main className="flex flex-col">
-    <VideoPlayer loop src="/mikus.webm" className="w-full lg:h-[80vh]" />
+const Home = () => {
+  const [selected, setSelected] = useState("/mikus.webm");
 
-    <div className="mx-5 my-6">
-      <Playlist title="初音ミク" videos={videos} selected="/mikus.webm" />
-    </div>
-  </main>
-);
+  return (
+    <main className="flex flex-col">
+      <VideoPlayer loop src={selected} className="w-full lg:h-[80vh]" />
+
+      <div className="mx-5 my-6">
+        <Playlist title="初音ミク" videos={videos} selected={selected} />
+      </div>
+    </main>
+  );
+};
 
 export default Home;
