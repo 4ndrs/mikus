@@ -2,9 +2,14 @@ import Image from "next/image";
 
 import type { Video } from "../types";
 
-type Props = { title: string; videos: Video[]; selected: string };
+type Props = {
+  title: string;
+  videos: Video[];
+  selected: string;
+  onChange: (value: string) => void;
+};
 
-const Playlist = ({ title, videos, selected }: Props) => (
+const Playlist = ({ title, videos, selected, onChange }: Props) => (
   <div className="max-h-[28.75rem] overflow-hidden rounded-xl border border-gray-700">
     <div className="bg-gray-800 pb-1 pl-4 pr-[0.38rem] pt-3">
       <h1 className="text-xl font-bold">{title}</h1>
@@ -16,7 +21,11 @@ const Playlist = ({ title, videos, selected }: Props) => (
 
     <div className="bg-gray-900">
       {videos.map((video, index) => (
-        <div key={video.src} className="flex pb-1 pr-2 pt-2">
+        <div
+          key={video.src}
+          onClick={() => onChange(video.src)}
+          className="flex pb-1 pr-2 pt-2"
+        >
           <span className="w-6 self-center text-center text-xs">
             {index + 1}
           </span>

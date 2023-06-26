@@ -28,7 +28,12 @@ const Home = () => {
       <VideoPlayer loop src={selected} className="w-full lg:h-[80vh]" />
 
       <div className="mx-5 my-6">
-        <Playlist title="初音ミク" videos={videos} selected={selected} />
+        <Playlist
+          title="初音ミク"
+          videos={videos}
+          selected={selected}
+          onChange={(value) => setSelected(value)}
+        />
       </div>
     </main>
   );
