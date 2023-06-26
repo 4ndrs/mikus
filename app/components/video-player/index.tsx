@@ -14,7 +14,12 @@ import ProgressBar from "./progress-bar";
 import Button from "./button";
 import Sound from "./sound";
 
-type Props = { src: string; className?: string; loop?: boolean };
+type Props = {
+  src: string;
+  className?: string;
+  loop?: boolean;
+  autoPlay?: boolean;
+};
 
 const VideoPlayer = (props: Props) => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -96,6 +101,7 @@ const VideoPlayer = (props: Props) => {
     >
       <video
         loop={props.loop}
+        autoPlay={props.autoPlay}
         ref={videoRef}
         src={props.src}
         onClick={() => {
