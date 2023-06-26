@@ -18,6 +18,12 @@ const videos = [
     duration: "00:26",
     thumbnail: "/1472407089017.thumbnail.png",
   },
+  {
+    title: "racing_miku.webm",
+    src: "/racing_miku.webm",
+    duration: "00:36",
+    thumbnail: "/racing_miku.thumbnail.png",
+  },
 ];
 
 const Home = () => {
