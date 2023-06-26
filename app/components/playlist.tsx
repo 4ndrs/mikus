@@ -23,7 +23,7 @@ const Playlist = ({ title }: Props) => (
             00:45
           </span>
         </div>
-        <span className="px-2 text-sm font-medium">mikus.webm</span>
+        <h2 className="px-2 text-sm font-medium">mikus.webm</h2>
       </div>
     </div>
   </div>
