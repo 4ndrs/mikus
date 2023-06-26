@@ -19,7 +19,7 @@ const Playlist = ({ title, videos, selected, onChange }: Props) => (
       </p>
     </div>
 
-    <div className="max-h-[26rem] overflow-y-scroll bg-gray-900 [&::-webkit-scrollbar]:hidden">
+    <div className="max-h-[23rem] overflow-y-scroll bg-gray-900 [&::-webkit-scrollbar]:hidden">
       {videos.map((video, index) => (
         <div
           key={video.src}
