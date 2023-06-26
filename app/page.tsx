@@ -21,7 +21,7 @@ const Home = () => (
     <VideoPlayer loop src="/mikus.webm" className="w-full lg:h-[80vh]" />
 
     <div className="mx-5 my-6">
-      <Playlist title="初音ミク" videos={videos} selected="mikus.webm" />
+      <Playlist title="初音ミク" videos={videos} selected="/mikus.webm" />
     </div>
   </main>
 );

@@ -9,7 +9,7 @@ const Playlist = ({ title, videos, selected }: Props) => (
     <div className="bg-gray-800 pb-1 pl-4 pr-[0.38rem] pt-3">
       <h1 className="text-xl font-bold">{title}</h1>
       <p className="my-1 text-xs text-gray-400">
-        {videos.findIndex((video) => video.title === selected) + 1} /{" "}
+        {videos.findIndex((video) => video.src === selected) + 1} /{" "}
         {videos.length}
       </p>
     </div>
