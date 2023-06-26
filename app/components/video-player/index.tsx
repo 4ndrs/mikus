@@ -29,6 +29,10 @@ const VideoPlayer = (props: Props) => {
   useEffect(() => {
     const videoElement = videoRef.current;
 
+    if (videoElement?.paused) {
+      setIsPlaying(false);
+    }
+
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
 
@@ -46,7 +50,7 @@ const VideoPlayer = (props: Props) => {
       videoElement?.removeEventListener("pause", handlePause);
       videoElement?.removeEventListener("ended", handleEnded);
     };
-  }, []);
+  }, [props.src]);
 
   const handlePlayToggle = () => {
     if (isPlaying) {
