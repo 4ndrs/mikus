@@ -42,6 +42,12 @@ const videos = [
     duration: "00:27",
     thumbnail: "/Astrophysics-Ms-Miku-After-Dark-cover.thumbnail.png",
   },
+  {
+    title: "Arelice - Kissing Me hard.webm",
+    src: "/Arelice - Kissing Me hard.webm",
+    duration: "02:56",
+    thumbnail: "/Arelice - Kissing Me hard.thumbnail.png",
+  },
 ];
 
 const Home = () => {
