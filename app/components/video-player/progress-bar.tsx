@@ -96,7 +96,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
           setHidingBall(true);
         }
       }}
-      className="group relative select-none pt-2 hover:cursor-pointer"
+      className="group relative select-none pt-2 transition-[filter] duration-300 hover:cursor-pointer hover:brightness-105"
     >
       <div
         ref={barRef}
