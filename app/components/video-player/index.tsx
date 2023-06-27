@@ -134,6 +134,7 @@ const VideoPlayer = (props: Props) => {
         <Image
           alt="Satanichia Kurumizawa Mcdowell"
           src={Satanichia}
+          placeholder="blur"
           className="h-[60%] w-auto"
         />
         <p className="m-3 text-center">
