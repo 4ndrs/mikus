@@ -18,12 +18,10 @@ import Image from "next/image";
 
 type Props = {
   src: string;
-  loop?: boolean;
-  autoPlay?: boolean;
 };
 
 const VideoPlayer = (props: Props) => {
-  const [loop, setLoop] = useState(props.loop);
+  const [loop, setLoop] = useState(true);
   const [error, setError] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -111,8 +109,8 @@ const VideoPlayer = (props: Props) => {
       className="group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] landscape:relative"
     >
       <video
-        loop={props.loop}
-        autoPlay={props.autoPlay}
+        autoPlay
+        loop={loop}
         ref={videoRef}
         src={props.src}
         onClick={() => {

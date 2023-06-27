@@ -55,7 +55,7 @@ const Home = () => {
 
   return (
     <main className="flex flex-col">
-      <VideoPlayer loop autoPlay src={selected} />
+      <VideoPlayer src={selected} />
 
       <div className="mx-5 my-6">
         <Playlist
