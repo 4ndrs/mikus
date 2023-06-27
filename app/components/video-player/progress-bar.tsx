@@ -12,13 +12,15 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   const [showBall, setShowBall] = useState(false);
 
   const duration = useDuration(videoRef);
-  const progress = useProgress(videoRef);
+
+  const { progress, buffered } = useProgress(videoRef);
 
   const barRef = useRef<HTMLDivElement>(null);
   const hovering = useRef(false);
   const lastPlayingStateRef = useRef(false);
 
   const position = `${((progress / duration) * 100).toFixed(3)}%`;
+  const bufferedPosition = `${((buffered / duration) * 100).toFixed(3)}%`;
 
   const handleChange = (event: React.MouseEvent | MouseEvent | TouchEvent) => {
     if (
@@ -102,9 +104,17 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
         ref={barRef}
         className={`relative h-1 ${
           movingBall ? "scale-y-150" : ""
-        } bg-slate-900/20 transition-transform duration-300 group-hover:scale-y-150`}
+        } bg-white/10 transition-transform duration-300 group-hover:scale-y-150`}
       >
-        <div style={{ width: position }} className="h-full bg-miku-3" />
+        <div
+          style={{ width: bufferedPosition }}
+          className="absolute inset-y-0 h-full bg-gray-300/40"
+        />
+
+        <div
+          style={{ width: position }}
+          className="relative h-full bg-miku-3"
+        />
       </div>
       <div
         onAnimationEnd={() => {

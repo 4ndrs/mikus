@@ -4,7 +4,8 @@ type Props = { videoRef: React.RefObject<HTMLVideoElement> };
 
 const TimeVisualizer = ({ videoRef }: Props) => {
   const duration = useDuration(videoRef);
-  const progress = useProgress(videoRef);
+
+  const { progress } = useProgress(videoRef);
 
   const parseTime = (seconds: number) =>
     `${("0" + Math.floor((seconds || 0) / 60)).slice(-2)}:${(
