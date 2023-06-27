@@ -11,8 +11,10 @@ import {
 
 import TimeVisualizer from "./time-visualizer";
 import ProgressBar from "./progress-bar";
+import Satanichia from "../../assets/1484726831236.png";
 import Button from "./button";
 import Sound from "./sound";
+import Image from "next/image";
 
 type Props = {
   src: string;
@@ -22,9 +24,10 @@ type Props = {
 };
 
 const VideoPlayer = (props: Props) => {
-  const [isPlaying, setIsPlaying] = useState(false);
   const [loop, setLoop] = useState(props.loop);
+  const [error, setError] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [hidingControls, setHidingControls] = useState(false);
 
@@ -38,8 +41,11 @@ const VideoPlayer = (props: Props) => {
       setIsPlaying(false);
     }
 
+    setError(false);
+
     const handlePlay = () => setIsPlaying(true);
     const handlePause = () => setIsPlaying(false);
+    const handleError = () => setError(true);
 
     const handleEnded = () => {
       setHidingControls(false);
@@ -49,15 +55,21 @@ const VideoPlayer = (props: Props) => {
     videoElement?.addEventListener("play", handlePlay);
     videoElement?.addEventListener("pause", handlePause);
     videoElement?.addEventListener("ended", handleEnded);
+    videoElement?.addEventListener("error", handleError);
 
     return () => {
       videoElement?.removeEventListener("play", handlePlay);
       videoElement?.removeEventListener("pause", handlePause);
       videoElement?.removeEventListener("ended", handleEnded);
+      videoElement?.removeEventListener("error", handleError);
     };
   }, [props.src]);
 
   const handlePlayToggle = () => {
+    if (error) {
+      return;
+    }
+
     if (isPlaying) {
       videoRef.current?.pause();
     } else {
@@ -66,7 +78,7 @@ const VideoPlayer = (props: Props) => {
   };
 
   const handleLoopToggle = () => {
-    if (!videoRef.current) {
+    if (!videoRef.current || error) {
       return;
     }
 
@@ -112,8 +124,23 @@ const VideoPlayer = (props: Props) => {
           }
         }}
         onContextMenu={handleContextMenu}
-        className="mx-auto h-full"
+        className={`${error ? "hidden" : "block"} mx-auto h-full`}
       />
+
+      <div
+        className={`${
+          error ? "flex" : "hidden"
+        } mt-auto h-full w-full flex-1 flex-col items-center justify-start lg:justify-center`}
+      >
+        <Image
+          alt="Satanichia Kurumizawa Mcdowell"
+          src={Satanichia}
+          className="h-[60%] w-auto"
+        />
+        <p className="m-3 text-center">
+          Failed to init decoder. Unsupported webms, perhaps?
+        </p>
+      </div>
 
       <div
         style={{
@@ -130,7 +157,6 @@ const VideoPlayer = (props: Props) => {
         />
         <HeartFilled className="text-red-600" /> Mikus
       </div>
-
       <div
         onAnimationEnd={() => {
           if (hidingControls) {
