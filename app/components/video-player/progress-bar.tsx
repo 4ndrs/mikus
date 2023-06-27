@@ -8,6 +8,8 @@ type Props = {
 
 const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   const [movingBall, setMovingBall] = useState(false);
+  const [hidingBall, setHidingBall] = useState(false);
+  const [showBall, setShowBall] = useState(false);
 
   const duration = useDuration(videoRef);
   const progress = useProgress(videoRef);
@@ -76,6 +78,12 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   return (
     <div
       onPointerDown={handlePointerDown}
+      onMouseEnter={() => setShowBall(true)}
+      onMouseLeave={() => {
+        if (!movingBall) {
+          setHidingBall(true);
+        }
+      }}
       className="group relative select-none pt-2 hover:cursor-pointer"
     >
       <div
@@ -87,10 +95,18 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
         <div style={{ width: position }} className="h-full bg-miku-3" />
       </div>
       <div
+        onAnimationEnd={() => {
+          if (hidingBall) {
+            setShowBall(false);
+            setHidingBall(false);
+          }
+        }}
         style={{ left: position }}
         className={`absolute -top-1/3 ${
-          movingBall ? "block" : "hidden group-hover:block"
-        } h-4 w-4 origin-bottom-left -translate-x-1/2 translate-y-1/3 animate-scale-in cursor-pointer rounded-full border-[4px] border-miku-3 bg-miku-6 `}
+          movingBall || showBall ? "block" : "hidden"
+        } ${
+          hidingBall ? "animate-scale-out" : "animate-scale-in"
+        } h-4 w-4 origin-bottom-left -translate-x-1/2 translate-y-1/3 cursor-pointer rounded-full border-[4px] border-miku-3 bg-miku-6 `}
       />
     </div>
   );
