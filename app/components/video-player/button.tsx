@@ -5,7 +5,8 @@ const Button = ({ children, className, ...props }: Props) => (
     <button
       {...props}
       className={
-        (className || "") + " flex items-center rounded-full bg-black/40 p-1"
+        (className || "") +
+        " flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out hover:bg-black/20"
       }
     >
       {children}
