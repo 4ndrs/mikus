@@ -85,6 +85,8 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
       onPointerDown={handlePointerDown}
       onMouseEnter={() => {
         hovering.current = true;
+
+        setHidingBall(false);
         setShowBall(true);
       }}
       onMouseLeave={() => {
