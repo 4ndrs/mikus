@@ -18,7 +18,6 @@ import Image from "next/image";
 
 type Props = {
   src: string;
-  className?: string;
   loop?: boolean;
   autoPlay?: boolean;
 };
@@ -109,7 +108,7 @@ const VideoPlayer = (props: Props) => {
           setHidingControls(true);
         }
       }}
-      className={props.className + " group/player relative bg-black"}
+      className="group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] landscape:relative"
     >
       <video
         loop={props.loop}

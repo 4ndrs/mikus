@@ -55,12 +55,7 @@ const Home = () => {
 
   return (
     <main className="flex flex-col">
-      <VideoPlayer
-        loop
-        autoPlay
-        src={selected}
-        className="sticky top-0 z-[1] h-80 w-full lg:relative lg:h-[80vh] landscape:relative"
-      />
+      <VideoPlayer loop autoPlay src={selected} />
 
       <div className="mx-5 my-6">
         <Playlist
