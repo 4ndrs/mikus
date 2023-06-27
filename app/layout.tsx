@@ -6,6 +6,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Mikus",
   description: "Mikus mikus mikus",
+  themeColor: "rgb(17 24 39)",
 };
 
 export default function RootLayout({
