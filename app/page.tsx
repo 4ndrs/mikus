@@ -59,7 +59,7 @@ const Home = () => {
         loop
         autoPlay
         src={selected}
-        className="h-80 w-full lg:h-[80vh]"
+        className="sticky top-0 z-[1] h-80 w-full lg:relative lg:h-[80vh] landscape:relative"
       />
 
       <div className="mx-5 my-6">
