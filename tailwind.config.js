@@ -21,8 +21,8 @@ module.exports = {
       animation: {
         "fade-in": "fade-in 250ms ease-out",
         "fade-out": "fade-out 250ms ease-in forwards",
-        "scale-in": "scale-in 200ms ease-in-out",
-        "scale-out": "scale-out 200ms ease-in forwards",
+        "scale-in": "scale-in 100ms ease",
+        "scale-out": "scale-out 200ms ease forwards",
       },
       keyframes: {
         "fade-in": {
