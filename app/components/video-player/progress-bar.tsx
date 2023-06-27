@@ -15,6 +15,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   const progress = useProgress(videoRef);
 
   const barRef = useRef<HTMLDivElement>(null);
+  const hovering = useRef(false);
   const lastPlayingStateRef = useRef(false);
 
   const position = `${((progress / duration) * 100).toFixed(3)}%`;
@@ -73,13 +74,22 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
     }
 
     setMovingBall(false);
+
+    if (!hovering.current) {
+      setHidingBall(true);
+    }
   };
 
   return (
     <div
       onPointerDown={handlePointerDown}
-      onMouseEnter={() => setShowBall(true)}
+      onMouseEnter={() => {
+        hovering.current = true;
+        setShowBall(true);
+      }}
       onMouseLeave={() => {
+        hovering.current = false;
+
         if (!movingBall) {
           setHidingBall(true);
         }
