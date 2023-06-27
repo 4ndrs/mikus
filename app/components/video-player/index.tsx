@@ -168,7 +168,7 @@ const VideoPlayer = (props: Props) => {
             : hidingControls
             ? "flex animate-fade-out"
             : "flex animate-fade-in"
-        } absolute bottom-0 left-0 right-0 mx-6 flex-col gap-4 bg-black/20 p-2`}
+        } absolute bottom-0 left-0 right-0 mx-0 flex-col gap-4 bg-gradient-to-t from-black/90 to-transparent px-8 py-2`}
       >
         <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
