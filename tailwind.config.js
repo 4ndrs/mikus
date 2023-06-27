@@ -18,6 +18,7 @@ module.exports = {
       animation: {
         "fade-in": "fade-in 250ms ease-out",
         "fade-out": "fade-out 250ms ease-in forwards",
+        "scale-in": "scale-in 200ms ease-in-out",
       },
       keyframes: {
         "fade-in": {
@@ -27,6 +28,10 @@ module.exports = {
         "fade-out": {
           "0%": { opacity: "1" },
           "100%": { opacity: "0" },
+        },
+        "scale-in": {
+          "0%": { scale: "0" },
+          "100%": { scale: "1" },
         },
       },
     },
