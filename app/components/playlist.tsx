@@ -37,7 +37,7 @@ const Playlist = ({ title, videos, selected, onChange }: Props) => (
               alt={`${video.title}'s thumbnail`}
               className="h-14 w-[6.25rem] object-cover"
             />
-            <span className="absolute bottom-0 right-0 m-1 rounded bg-black px-1 py-[0.19rem] text-xs font-medium">
+            <span className="absolute bottom-0 right-0 m-1 rounded bg-black/75 px-1 py-[0.19rem] text-xs font-medium">
               {video.duration}
             </span>
           </div>
