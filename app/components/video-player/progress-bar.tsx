@@ -90,7 +90,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
         style={{ left: position }}
         className={`absolute -top-1/3 ${
           movingBall ? "block" : "hidden group-hover:block"
-        } h-4 w-4 origin-bottom-left -translate-x-1/2 translate-y-1/3 animate-scale-in cursor-pointer rounded-full border-[4px] border-miku-3 bg-slate-500 `}
+        } h-4 w-4 origin-bottom-left -translate-x-1/2 translate-y-1/3 animate-scale-in cursor-pointer rounded-full border-[4px] border-miku-3 bg-miku-6 `}
       />
     </div>
   );

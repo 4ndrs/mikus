@@ -13,6 +13,9 @@ module.exports = {
           2: "#43a0b1",
           3: "#46bfcc",
           4: "#2d858d",
+          5: "#ff84b3",
+          6: "#da4175",
+          7: "#fe031e",
         },
       },
       animation: {
