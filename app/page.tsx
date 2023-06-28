@@ -1,6 +1,4 @@
-"use client";
-
-import { notFound, redirect, useSearchParams } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 import Playlist from "./components/playlist";
 import VideoPlayer from "./components/video-player";
@@ -64,10 +62,14 @@ const videos = [
   },
 ];
 
-const Home = () => {
-  const searchParams = useSearchParams();
+type Props = { searchParams: { [key: string]: string | string[] | undefined } };
 
-  const selectedId = searchParams.get("v");
+const Home = ({ searchParams }: Props) => {
+  const selectedId =
+    "v" in searchParams && typeof searchParams["v"] === "string"
+      ? searchParams["v"]
+      : "";
+
   const selectedVideo = videos.find((video) => video.id === selectedId);
 
   if (!selectedId) {
