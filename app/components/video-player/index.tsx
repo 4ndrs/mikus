@@ -23,6 +23,7 @@ type Props = {
 const VideoPlayer = (props: Props) => {
   const [loop, setLoop] = useState(true);
   const [error, setError] = useState(false);
+  const [autoPlay, setAutoPlay] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [showControls, setShowControls] = useState(true);
@@ -61,6 +62,10 @@ const VideoPlayer = (props: Props) => {
       videoElement?.removeEventListener("error", handleError);
     };
   }, [props.src]);
+
+  useEffect(() => {
+    setAutoPlay(true);
+  }, []);
 
   const handlePlayToggle = () => {
     if (error) {
@@ -109,7 +114,7 @@ const VideoPlayer = (props: Props) => {
       className="group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] landscape:relative"
     >
       <video
-        autoPlay
+        autoPlay={autoPlay}
         loop={loop}
         ref={videoRef}
         src={props.src}
