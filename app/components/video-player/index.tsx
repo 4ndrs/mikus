@@ -163,7 +163,8 @@ const VideoPlayer = (props: Props) => {
           onClick={() => setOpenMenu(false)}
           className="fixed inset-0 bg-transparent"
         />
-        <HeartFilled className="text-red-600" /> Mikus
+        <HeartFilled style={{ color: props.color }} className="text-miku-3" />{" "}
+        Mikus
       </div>
       <div
         onAnimationEnd={() => {
