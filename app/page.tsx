@@ -42,6 +42,7 @@ const videos = [
     id: "3Mj6k7L9N4",
     title: "Magical Candy ミカヅキBIGWAVE.webm",
     description: "cute miku",
+    color: "#aad8af",
     src: "/Magical Candy ミカヅキBIGWAVE.webm",
     duration: "00:22",
     thumbnail: "/Magical Candy ミカヅキBIGWAVE.thumbnail.png",
@@ -50,6 +51,7 @@ const videos = [
     id: "8Bn5v3C4X9",
     title: "Astrophysics-Ms-Miku-After-Dark-cover.webm",
     description: "melancholic miku",
+    color: "#3560b1",
     src: "/Astrophysics-Ms-Miku-After-Dark-cover.webm",
     duration: "00:27",
     thumbnail: "/Astrophysics-Ms-Miku-After-Dark-cover.thumbnail.png",
@@ -58,6 +60,7 @@ const videos = [
     id: "1Ft9g7Y3Q6",
     title: "Arelice - Kissing Me hard.webm",
     description: "cool miku",
+    color: "#6892bc",
     src: "/Arelice - Kissing Me hard.webm",
     duration: "02:56",
     thumbnail: "/Arelice - Kissing Me hard.thumbnail.png",
@@ -113,6 +116,7 @@ const Home = ({ searchParams }: Props) => {
     <main className="flex flex-col">
       <VideoPlayer
         src={selectedVideo.src}
+        color={selectedVideo.color}
         nextHref={`/?v=${nextVideo.id}`}
         previousHref={`?v=${previousVideo.id}`}
       />

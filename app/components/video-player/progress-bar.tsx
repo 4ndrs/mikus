@@ -4,9 +4,10 @@ import { useRef, useState } from "react";
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
   isPlaying: boolean;
+  color?: string;
 };
 
-const ProgressBar = ({ videoRef, isPlaying }: Props) => {
+const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
   const [movingBall, setMovingBall] = useState(false);
   const [hidingBall, setHidingBall] = useState(false);
   const [showBall, setShowBall] = useState(false);
@@ -112,7 +113,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
         />
 
         <div
-          style={{ width: progressPosition }}
+          style={{ width: progressPosition, backgroundColor: color }}
           className="relative h-full bg-miku-3"
         />
       </div>
@@ -123,7 +124,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
             setHidingBall(false);
           }
         }}
-        style={{ left: progressPosition }}
+        style={{ left: progressPosition, borderColor: color }}
         className={`absolute -top-1/3 ${
           movingBall || showBall ? "block" : "hidden"
         } ${

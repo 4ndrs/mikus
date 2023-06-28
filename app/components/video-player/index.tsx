@@ -20,6 +20,7 @@ import Image from "next/image";
 
 type Props = {
   src: string;
+  color?: string;
   nextHref?: string;
   previousHref?: string;
 };
@@ -179,7 +180,11 @@ const VideoPlayer = (props: Props) => {
             : "flex animate-fade-in"
         } absolute bottom-0 left-0 right-0 mx-0 flex-col gap-4 bg-gradient-to-t from-black/90 to-transparent px-8 py-2`}
       >
-        <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
+        <ProgressBar
+          videoRef={videoRef}
+          isPlaying={isPlaying}
+          color={props.color}
+        />
 
         <div className="flex items-center justify-between">
           <TimeVisualizer videoRef={videoRef} />
