@@ -1,5 +1,7 @@
 import { notFound, redirect } from "next/navigation";
 
+import { type Metadata } from "next";
+
 import Playlist from "./components/playlist";
 import VideoPlayer from "./components/video-player";
 
@@ -63,6 +65,26 @@ const videos = [
 ];
 
 type Props = { searchParams: { [key: string]: string | string[] | undefined } };
+
+export const generateMetadata = async ({
+  searchParams,
+}: Props): Promise<Metadata> => {
+  const selectedId =
+    "v" in searchParams && typeof searchParams["v"] === "string"
+      ? searchParams["v"]
+      : "";
+
+  const selectedVideo = videos.find((video) => video.id === selectedId);
+
+  if (!selectedVideo) {
+    return {};
+  }
+
+  return {
+    title: selectedVideo.title,
+    description: selectedVideo.description,
+  };
+};
 
 const Home = ({ searchParams }: Props) => {
   const selectedId =
