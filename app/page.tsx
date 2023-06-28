@@ -83,6 +83,11 @@ export const generateMetadata = async ({
   return {
     title: selectedVideo.title,
     description: selectedVideo.description,
+    openGraph: {
+      title: selectedVideo.title,
+      description: selectedVideo.description,
+      images: { url: selectedVideo.thumbnail },
+    },
   };
 };
 
