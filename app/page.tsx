@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { notFound, redirect, useSearchParams } from "next/navigation";
 
 import Playlist from "./components/playlist";
 import VideoPlayer from "./components/video-player";
@@ -58,12 +58,17 @@ const videos = [
 ];
 
 const Home = () => {
-  const [selectedId, setSelectedId] = useState("4Tg7e2P9R1");
+  const searchParams = useSearchParams();
 
+  const selectedId = searchParams.get("v");
   const selectedVideo = videos.find((video) => video.id === selectedId);
 
+  if (!selectedId) {
+    redirect("/?v=8Bn5v3C4X9");
+  }
+
   if (!selectedVideo) {
-    throw new Error(`Selected video id "${selectedId}" was not found.`);
+    notFound();
   }
 
   return (
@@ -71,12 +76,7 @@ const Home = () => {
       <VideoPlayer src={selectedVideo.src} />
 
       <div className="mx-5 my-6">
-        <Playlist
-          title="初音ミク"
-          videos={videos}
-          selectedId={selectedId}
-          onChange={(value) => setSelectedId(value)}
-        />
+        <Playlist title="初音ミク" videos={videos} selectedId={selectedId} />
       </div>
     </main>
   );

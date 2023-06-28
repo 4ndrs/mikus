@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 
 import type { Video } from "../types";
@@ -6,10 +7,9 @@ type Props = {
   title: string;
   videos: Video[];
   selectedId: string;
-  onChange: (value: string) => void;
 };
 
-const Playlist = ({ title, videos, selectedId, onChange }: Props) => (
+const Playlist = ({ title, videos, selectedId }: Props) => (
   <div className="overflow-hidden rounded-xl border border-gray-700">
     <div className="bg-gray-800 pb-1 pl-4 pr-[0.38rem] pt-3">
       <h1 className="text-xl font-bold">{title}</h1>
@@ -21,9 +21,9 @@ const Playlist = ({ title, videos, selectedId, onChange }: Props) => (
 
     <div className="max-h-[23rem] overflow-y-scroll bg-gray-900 [&::-webkit-scrollbar]:hidden">
       {videos.map((video, index) => (
-        <div
+        <Link
           key={video.id}
-          onClick={() => onChange(video.id)}
+          href={`/?v=${video.id}`}
           className="flex pb-1 pr-2 pt-2"
         >
           <span className="w-6 self-center text-center text-xs">
@@ -42,7 +42,7 @@ const Playlist = ({ title, videos, selectedId, onChange }: Props) => (
             </span>
           </div>
           <h2 className="flex-1 px-2 text-sm font-medium">{video.title}</h2>
-        </div>
+        </Link>
       ))}
     </div>
   </div>
