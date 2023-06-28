@@ -93,19 +93,22 @@ export const generateMetadata = async ({
 
 const Home = ({ searchParams }: Props) => {
   const selectedId = searchParams["v"];
-  const selectedVideo = videos.find((video) => video.id === selectedId);
+  const selectedIndex = videos.findIndex((video) => video.id === selectedId);
 
   if (!selectedId || typeof selectedId !== "string") {
     redirect("/?v=8Bn5v3C4X9");
   }
 
-  if (!selectedVideo) {
+  if (selectedIndex == -1) {
     notFound();
   }
 
+  const selectedVideo = videos[selectedIndex];
+  const nextVideo = videos[(selectedIndex + 1) % videos.length];
+
   return (
     <main className="flex flex-col">
-      <VideoPlayer src={selectedVideo.src} />
+      <VideoPlayer src={selectedVideo.src} nextHref={`/?v=${nextVideo.id}`} />
 
       <div className="mx-5 my-6">
         <Playlist title="初音ミク" videos={videos} selectedId={selectedId} />

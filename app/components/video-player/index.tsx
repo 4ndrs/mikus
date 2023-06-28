@@ -7,6 +7,7 @@ import {
   HeartFilled,
   PauseOutlined,
   RetweetOutlined,
+  StepForwardFilled,
 } from "@ant-design/icons";
 
 import TimeVisualizer from "./time-visualizer";
@@ -18,6 +19,7 @@ import Image from "next/image";
 
 type Props = {
   src: string;
+  nextHref?: string;
 };
 
 const VideoPlayer = (props: Props) => {
@@ -187,6 +189,13 @@ const VideoPlayer = (props: Props) => {
             >
               {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
             </Button>
+
+            {props.nextHref && (
+              <Button href={props.nextHref}>
+                <StepForwardFilled />
+              </Button>
+            )}
+
             <Button
               aria-label={`${loop ? "disable" : "activate"} loop`}
               className={`${loop ? "" : "text-slate-400"}`}
