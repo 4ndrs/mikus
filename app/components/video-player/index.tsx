@@ -219,7 +219,7 @@ const VideoPlayer = (props: Props) => {
             >
               <RetweetOutlined />
             </Button>
-            <Sound videoRef={videoRef} />
+            <Sound videoRef={videoRef} color={props.color} />
           </div>
         </div>
       </div>

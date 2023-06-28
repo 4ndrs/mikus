@@ -3,9 +3,9 @@ import { useEffect, useRef, useState } from "react";
 
 import Button from "./button";
 
-type Props = { videoRef: React.RefObject<HTMLVideoElement> };
+type Props = { videoRef: React.RefObject<HTMLVideoElement>; color?: string };
 
-const Sound = ({ videoRef }: Props) => {
+const Sound = ({ videoRef, color }: Props) => {
   const [volume, setVolume] = useState(0);
 
   const lastVolumeState = useRef(0.2);
@@ -122,14 +122,17 @@ const Sound = ({ videoRef }: Props) => {
       <div
         ref={barRef}
         onPointerDown={handlePointerDown}
-        className="absolute left-1/2 top-0 hidden -translate-x-1/2 -translate-y-[calc(100%+10px)] rounded bg-slate-600 px-4 py-2 group-hover:block"
+        className="absolute left-1/2 top-0 hidden -translate-x-1/2 -translate-y-[calc(100%+10px)] rounded-full bg-black/40 px-4 py-3 group-hover:block"
       >
-        <div className="relative h-14 w-[0.34rem] rounded bg-slate-700">
+        <div className="relative h-14 w-[0.34rem] rounded bg-slate-700/50">
           <div
-            style={{ top: `calc(100% - ${position})` }}
-            className="absolute inset-x-0 bottom-0 rounded bg-white"
+            style={{ top: `calc(100% - ${position})`, backgroundColor: color }}
+            className="absolute inset-x-0 bottom-0 rounded bg-miku-3"
           >
-            <div className="absolute left-0 top-0 h-3 w-3 -translate-x-1/4 -translate-y-1/2 rounded-full bg-white" />
+            <div
+              style={{ backgroundColor: color }}
+              className="absolute left-0 top-0 h-3 w-3 -translate-x-1/4 -translate-y-1/2 rounded-full bg-miku-3"
+            />
           </div>
         </div>
       </div>
