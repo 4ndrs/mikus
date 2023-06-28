@@ -203,17 +203,18 @@ const VideoPlayer = (props: Props) => {
                 <StepForwardFilled />
               </Button>
             )}
+          </div>
 
+          <div className="flex gap-1">
             <Button
-              aria-label={`${loop ? "disable" : "activate"} loop`}
-              className={`${loop ? "" : "text-slate-400"}`}
+              aria-label={`${loop ? "disable" : "enable"} loop`}
+              className={loop ? "" : "text-slate-400"}
               onClick={handleLoopToggle}
             >
               <RetweetOutlined />
             </Button>
+            <Sound videoRef={videoRef} />
           </div>
-
-          <Sound videoRef={videoRef} />
         </div>
       </div>
     </div>
