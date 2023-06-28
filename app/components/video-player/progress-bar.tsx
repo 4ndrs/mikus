@@ -19,7 +19,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   const hovering = useRef(false);
   const lastPlayingStateRef = useRef(false);
 
-  const position = `${((progress / duration) * 100).toFixed(3)}%`;
+  const progressPosition = `${((progress / duration) * 100).toFixed(3)}%`;
   const bufferedPosition = `${((buffered / duration) * 100).toFixed(3)}%`;
 
   const handleChange = (event: React.MouseEvent | MouseEvent | TouchEvent) => {
@@ -112,7 +112,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
         />
 
         <div
-          style={{ width: position }}
+          style={{ width: progressPosition }}
           className="relative h-full bg-miku-3"
         />
       </div>
@@ -123,7 +123,7 @@ const ProgressBar = ({ videoRef, isPlaying }: Props) => {
             setHidingBall(false);
           }
         }}
-        style={{ left: position }}
+        style={{ left: progressPosition }}
         className={`absolute -top-1/3 ${
           movingBall || showBall ? "block" : "hidden"
         } ${
