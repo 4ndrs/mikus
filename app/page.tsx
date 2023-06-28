@@ -92,14 +92,10 @@ export const generateMetadata = async ({
 };
 
 const Home = ({ searchParams }: Props) => {
-  const selectedId =
-    "v" in searchParams && typeof searchParams["v"] === "string"
-      ? searchParams["v"]
-      : "";
-
+  const selectedId = searchParams["v"];
   const selectedVideo = videos.find((video) => video.id === selectedId);
 
-  if (!selectedId) {
+  if (!selectedId || typeof selectedId !== "string") {
     redirect("/?v=8Bn5v3C4X9");
   }
 
