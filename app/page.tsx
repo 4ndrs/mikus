@@ -106,9 +106,16 @@ const Home = ({ searchParams }: Props) => {
   const selectedVideo = videos[selectedIndex];
   const nextVideo = videos[(selectedIndex + 1) % videos.length];
 
+  const previousVideo =
+    videos[selectedIndex - 1 >= 0 ? selectedIndex - 1 : videos.length - 1];
+
   return (
     <main className="flex flex-col">
-      <VideoPlayer src={selectedVideo.src} nextHref={`/?v=${nextVideo.id}`} />
+      <VideoPlayer
+        src={selectedVideo.src}
+        nextHref={`/?v=${nextVideo.id}`}
+        previousHref={`?v=${previousVideo.id}`}
+      />
 
       <div className="mx-5 my-6">
         <Playlist title="初音ミク" videos={videos} selectedId={selectedId} />

@@ -7,6 +7,7 @@ import {
   HeartFilled,
   PauseOutlined,
   RetweetOutlined,
+  StepBackwardFilled,
   StepForwardFilled,
 } from "@ant-design/icons";
 
@@ -20,6 +21,7 @@ import Image from "next/image";
 type Props = {
   src: string;
   nextHref?: string;
+  previousHref?: string;
 };
 
 const VideoPlayer = (props: Props) => {
@@ -183,6 +185,12 @@ const VideoPlayer = (props: Props) => {
           <TimeVisualizer videoRef={videoRef} />
 
           <div className="flex gap-1">
+            {props.previousHref && (
+              <Button href={props.previousHref}>
+                <StepBackwardFilled />
+              </Button>
+            )}
+
             <Button
               aria-label={`${isPlaying ? "pause" : "play"} video`}
               onClick={handlePlayToggle}
