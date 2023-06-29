@@ -22,7 +22,18 @@ const Playlist = ({ title, videos, selectedId }: Props) => (
     <ul className="max-h-[23rem] overflow-y-scroll bg-gray-900 [&::-webkit-scrollbar]:hidden">
       {videos.map((video, index) => (
         <li key={video.id}>
-          <Link href={`/?v=${video.id}`} className="flex pb-1 pr-2 pt-2">
+          <Link
+            href={`/?v=${video.id}`}
+            style={{
+              backgroundColor:
+                selectedId === video.id && video.color
+                  ? video.color + "26"
+                  : "",
+            }}
+            className={`${
+              selectedId === video.id ? "bg-miku-3/25" : "hover:bg-gray-500/20"
+            } flex pb-1 pr-2 pt-2 `}
+          >
             <span className="w-6 self-center text-center text-xs">
               {index + 1}
             </span>
