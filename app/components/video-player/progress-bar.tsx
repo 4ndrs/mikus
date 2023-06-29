@@ -13,6 +13,7 @@ const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
   const [showBall, setShowBall] = useState(false);
 
   const duration = useDuration(videoRef);
+  const lastSeekRef = useRef(Date.now());
 
   const { progress, buffered } = useProgress(videoRef);
 
@@ -29,13 +30,18 @@ const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
   )}%`;
 
   const handleChange = (event: React.MouseEvent | MouseEvent | TouchEvent) => {
+    const lastSeekDifference = Date.now() - lastSeekRef.current;
+
     if (
+      lastSeekDifference < 40 ||
       !videoRef.current ||
       !barRef.current ||
       ("clientX" in event && event.clientX === 0)
     ) {
       return;
     }
+
+    lastSeekRef.current = Date.now();
 
     const clientX =
       "clientX" in event ? event.clientX : event.touches[0].clientX;
