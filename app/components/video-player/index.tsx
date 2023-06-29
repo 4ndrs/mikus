@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import {
   CaretRightFilled,
   HeartFilled,
+  LoadingOutlined,
   PauseOutlined,
   RetweetOutlined,
   StepBackwardFilled,
@@ -29,6 +30,7 @@ type Props = {
 const VideoPlayer = (props: Props) => {
   const [loop, setLoop] = useState(true);
   const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [autoPlay, setAutoPlay] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -51,6 +53,9 @@ const VideoPlayer = (props: Props) => {
     const handlePause = () => setIsPlaying(false);
     const handleError = () => setError(true);
 
+    const handleLoading = () => setLoading(true);
+    const handleNotLoading = () => setLoading(false);
+
     const handleEnded = () => {
       setHidingControls(false);
       setShowControls(true);
@@ -61,11 +66,27 @@ const VideoPlayer = (props: Props) => {
     videoElement?.addEventListener("ended", handleEnded);
     videoElement?.addEventListener("error", handleError);
 
+    // loading events
+    videoElement?.addEventListener("loadstart", handleLoading);
+    videoElement?.addEventListener("waiting", handleLoading);
+    videoElement?.addEventListener("stalled", handleLoading);
+
+    // not loading events
+    videoElement?.addEventListener("canplay", handleNotLoading);
+    videoElement?.addEventListener("canplaythrough", handleNotLoading);
+
     return () => {
       videoElement?.removeEventListener("play", handlePlay);
       videoElement?.removeEventListener("pause", handlePause);
       videoElement?.removeEventListener("ended", handleEnded);
       videoElement?.removeEventListener("error", handleError);
+
+      videoElement?.removeEventListener("loadstart", handleLoading);
+      videoElement?.removeEventListener("waiting", handleLoading);
+      videoElement?.removeEventListener("stalled", handleLoading);
+
+      videoElement?.removeEventListener("canplay", handleNotLoading);
+      videoElement?.removeEventListener("canplaythrough", handleNotLoading);
     };
   }, [props.src]);
 
@@ -134,6 +155,13 @@ const VideoPlayer = (props: Props) => {
         onContextMenu={handleContextMenu}
         className={`${error ? "hidden" : "block"} mx-auto h-full`}
       />
+
+      {loading && !error && (
+        <LoadingOutlined
+          style={{ color: props.color }}
+          className="absolute right-[calc(50%-calc(6rem*0.5))] top-[calc(50%-calc(6rem*0.5))] text-[6rem] text-miku-2"
+        />
+      )}
 
       <div
         className={`${
