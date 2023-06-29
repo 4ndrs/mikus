@@ -16,6 +16,7 @@ const useProgress = (videoRef: React.RefObject<HTMLVideoElement>) => {
 
     const handleLoadedData = () => {
       setBuffered(videoElement.buffered.end(0));
+      setProgress(0);
       clearInterval(id);
     };
 
