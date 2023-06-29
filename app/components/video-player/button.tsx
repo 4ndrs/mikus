@@ -9,7 +9,7 @@ const Button = ({ children, className, ...props }: Props) => (
         {...props}
         className={
           (className || "") +
-          " flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out hover:bg-black/20"
+          " flex items-center rounded-full p-1 outline-none ring-miku-3/80 transition-colors duration-200 ease-in-out hover:bg-black/20 focus-visible:ring"
         }
       >
         {children}
@@ -19,7 +19,7 @@ const Button = ({ children, className, ...props }: Props) => (
         {...props}
         className={
           (className || "") +
-          " flex items-center rounded-full p-1 transition-colors duration-200 ease-in-out hover:bg-black/20"
+          " flex items-center rounded-full p-1 outline-none ring-miku-3/80 transition-colors duration-200 ease-in-out hover:bg-black/20 focus-visible:ring"
         }
       >
         {children}
