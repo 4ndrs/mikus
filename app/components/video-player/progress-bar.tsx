@@ -21,6 +21,7 @@ const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
   const barRef = useRef<HTMLDivElement>(null);
   const hovering = useRef(false);
   const lastPlayingStateRef = useRef(false);
+  const lastSeekUpdateRef = useRef(Date.now());
 
   useEffect(() => {
     if (!movingBall) {
@@ -55,7 +56,12 @@ const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
     const percentage = tmp > 1 ? 1 : tmp < 0 ? 0 : tmp;
     const value = +(duration * percentage).toFixed(3);
 
-    videoRef.current.currentTime = value;
+    // Seek only every 40 milliseconds
+    if (Date.now() - lastSeekUpdateRef.current > 40) {
+      videoRef.current.currentTime = value;
+
+      lastSeekUpdateRef.current = Date.now();
+    }
 
     setCurrent(value);
   };
