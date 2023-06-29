@@ -31,8 +31,10 @@ const Playlist = ({ title, videos, selectedId }: Props) => (
                   : "",
             }}
             className={`${
-              selectedId === video.id ? "bg-miku-3/25" : "hover:bg-gray-500/20"
-            } flex pb-1 pr-2 pt-2 `}
+              selectedId === video.id
+                ? "bg-miku-3/25"
+                : "hover:bg-gray-500/20 focus-visible:bg-gray-500/20"
+            } flex pb-1 pr-2 pt-2 outline-none`}
           >
             <span className="w-6 self-center text-center text-xs">
               {index + 1}
