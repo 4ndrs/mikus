@@ -10,44 +10,52 @@ import type { Video } from "../types";
 type Props = {
   title: string;
   videos: Video[];
-  selectedId: string;
+  selectedIndex: number;
 };
 
-const Playlist = ({ title, videos, selectedId }: Props) => {
+const Playlist = ({ title, videos, selectedIndex }: Props) => {
   const selectedRef = useRef<HTMLAnchorElement>(null);
+  const scrollableParentRef = useRef<HTMLUListElement>(null);
 
   useEffect(() => {
-    if (!selectedRef.current) {
+    if (!selectedRef.current || !scrollableParentRef.current) {
       return;
     }
 
-    selectedRef.current.scrollIntoView({ behavior: "smooth" });
-  }, [selectedId]);
+    const scrollDistance = selectedRef.current.clientHeight * selectedIndex;
+
+    scrollableParentRef.current.scroll({
+      top: scrollDistance,
+      behavior: "instant",
+    });
+  }, [selectedIndex]);
 
   return (
     <aside className="overflow-hidden rounded-xl border border-gray-700">
       <div className="bg-gray-800 pb-1 pl-4 pr-[0.38rem] pt-3">
         <h1 className="text-xl font-bold">{title}</h1>
         <p className="my-1 text-xs text-gray-400">
-          {videos.findIndex((video) => video.id === selectedId) + 1} /{" "}
-          {videos.length}
+          {selectedIndex + 1} / {videos.length}
         </p>
       </div>
 
-      <ul className="max-h-[23rem] overflow-y-scroll bg-gray-900 [&::-webkit-scrollbar]:hidden">
+      <ul
+        ref={scrollableParentRef}
+        className="max-h-[23rem] overflow-y-scroll bg-gray-900 [&::-webkit-scrollbar]:hidden"
+      >
         {videos.map((video, index) => (
           <li key={video.id}>
             <Link
-              ref={selectedId === video.id ? selectedRef : null}
+              ref={selectedIndex === index ? selectedRef : null}
               href={`/?v=${video.id}`}
               style={{
                 backgroundColor:
-                  selectedId === video.id && video.color
+                  selectedIndex === index && video.color
                     ? video.color + "26"
                     : "",
               }}
               className={`${
-                selectedId === video.id
+                selectedIndex === index
                   ? "bg-miku-3/25"
                   : "hover:bg-gray-500/20 focus-visible:bg-gray-500/20"
               } flex pb-1 pr-2 pt-2 outline-none`}

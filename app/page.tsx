@@ -123,7 +123,11 @@ const Home = ({ searchParams }: Props) => {
       />
 
       <div className="mx-5 my-6">
-        <Playlist title="初音ミク" videos={videos} selectedId={selectedId} />
+        <Playlist
+          title="初音ミク"
+          videos={videos}
+          selectedIndex={selectedIndex}
+        />
       </div>
     </main>
   );
