@@ -192,7 +192,7 @@ const VideoPlayer = (props: Props) => {
 
           <div className="flex gap-1">
             {props.previousHref && (
-              <Button href={props.previousHref}>
+              <Button aria-label="previous video" href={props.previousHref}>
                 <StepBackwardFilled />
               </Button>
             )}
@@ -205,7 +205,7 @@ const VideoPlayer = (props: Props) => {
             </Button>
 
             {props.nextHref && (
-              <Button href={props.nextHref}>
+              <Button aria-label="next video" href={props.nextHref}>
                 <StepForwardFilled />
               </Button>
             )}
