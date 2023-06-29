@@ -11,6 +11,7 @@ import {
   StepForwardFilled,
 } from "@ant-design/icons";
 
+import { ProgressBarProvider } from "@/app/context";
 import TimeVisualizer from "./time-visualizer";
 import ProgressBar from "./progress-bar";
 import Satanichia from "../../assets/1484726831236.png";
@@ -181,57 +182,59 @@ const VideoPlayer = (props: Props) => {
             : "flex animate-fade-in"
         } absolute bottom-0 left-0 right-0 mx-0 flex-col gap-4 bg-gradient-to-t from-black/90 to-transparent px-8 py-2`}
       >
-        <ProgressBar
-          videoRef={videoRef}
-          isPlaying={isPlaying}
-          color={props.color}
-        />
+        <ProgressBarProvider>
+          <ProgressBar
+            videoRef={videoRef}
+            isPlaying={isPlaying}
+            color={props.color}
+          />
 
-        <div className="flex items-center justify-between">
-          <TimeVisualizer videoRef={videoRef} />
+          <div className="flex items-center justify-between">
+            <TimeVisualizer videoRef={videoRef} />
 
-          <div className="flex gap-1">
-            {props.previousHref && (
+            <div className="flex gap-1">
+              {props.previousHref && (
+                <Button
+                  aria-label="previous video"
+                  href={props.previousHref}
+                  color={props.color}
+                >
+                  <StepBackwardFilled />
+                </Button>
+              )}
+
               <Button
-                aria-label="previous video"
-                href={props.previousHref}
+                aria-label={`${isPlaying ? "pause" : "play"} video`}
+                onClick={handlePlayToggle}
                 color={props.color}
               >
-                <StepBackwardFilled />
+                {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
               </Button>
-            )}
 
-            <Button
-              aria-label={`${isPlaying ? "pause" : "play"} video`}
-              onClick={handlePlayToggle}
-              color={props.color}
-            >
-              {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
-            </Button>
+              {props.nextHref && (
+                <Button
+                  aria-label="next video"
+                  href={props.nextHref}
+                  color={props.color}
+                >
+                  <StepForwardFilled />
+                </Button>
+              )}
+            </div>
 
-            {props.nextHref && (
+            <div className="flex gap-1">
               <Button
-                aria-label="next video"
-                href={props.nextHref}
+                aria-label={`${loop ? "disable" : "enable"} loop`}
+                className={loop ? "" : "text-slate-400"}
+                onClick={handleLoopToggle}
                 color={props.color}
               >
-                <StepForwardFilled />
+                <RetweetOutlined />
               </Button>
-            )}
+              <Sound videoRef={videoRef} color={props.color} />
+            </div>
           </div>
-
-          <div className="flex gap-1">
-            <Button
-              aria-label={`${loop ? "disable" : "enable"} loop`}
-              className={loop ? "" : "text-slate-400"}
-              onClick={handleLoopToggle}
-              color={props.color}
-            >
-              <RetweetOutlined />
-            </Button>
-            <Sound videoRef={videoRef} color={props.color} />
-          </div>
-        </div>
+        </ProgressBarProvider>
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { useProgressBar } from "@/app/context";
 import { useDuration, useProgress } from "@/app/hooks";
 import { useRef, useState } from "react";
 
@@ -12,36 +13,32 @@ const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
   const [hidingBall, setHidingBall] = useState(false);
   const [showBall, setShowBall] = useState(false);
 
-  const duration = useDuration(videoRef);
-  const lastSeekRef = useRef(Date.now());
-
+  const { current, setCurrent } = useProgressBar();
   const { progress, buffered } = useProgress(videoRef);
+
+  const duration = useDuration(videoRef);
 
   const barRef = useRef<HTMLDivElement>(null);
   const hovering = useRef(false);
   const lastPlayingStateRef = useRef(false);
 
-  const progressPosition = `${((progress / (duration || 1)) * 100).toFixed(
-    3
-  )}%`;
+  const progressPosition = `${(
+    ((movingBall ? current : progress) / (duration || 1)) *
+    100
+  ).toFixed(3)}%`;
 
   const bufferedPosition = `${((buffered / (duration || 1)) * 100).toFixed(
     3
   )}%`;
 
   const handleChange = (event: React.MouseEvent | MouseEvent | TouchEvent) => {
-    const lastSeekDifference = Date.now() - lastSeekRef.current;
-
     if (
-      lastSeekDifference < 40 ||
       !videoRef.current ||
       !barRef.current ||
       ("clientX" in event && event.clientX === 0)
     ) {
       return;
     }
-
-    lastSeekRef.current = Date.now();
 
     const clientX =
       "clientX" in event ? event.clientX : event.touches[0].clientX;
@@ -53,6 +50,8 @@ const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
     const value = +(duration * percentage).toFixed(3);
 
     videoRef.current.currentTime = value;
+
+    setCurrent(value);
   };
 
   const handlePointerDown = (event: React.MouseEvent) => {
