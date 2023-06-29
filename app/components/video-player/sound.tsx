@@ -137,7 +137,11 @@ const Sound = ({ videoRef, color }: Props) => {
         </div>
       </div>
 
-      <Button onClick={handleToggleMute} onTouchStart={handleIconTouch}>
+      <Button
+        onClick={handleToggleMute}
+        onTouchStart={handleIconTouch}
+        color={color}
+      >
         {volume === 0 ? <SoundOutlined /> : <SoundFilled />}
       </Button>
     </div>

@@ -192,7 +192,11 @@ const VideoPlayer = (props: Props) => {
 
           <div className="flex gap-1">
             {props.previousHref && (
-              <Button aria-label="previous video" href={props.previousHref}>
+              <Button
+                aria-label="previous video"
+                href={props.previousHref}
+                color={props.color}
+              >
                 <StepBackwardFilled />
               </Button>
             )}
@@ -200,12 +204,17 @@ const VideoPlayer = (props: Props) => {
             <Button
               aria-label={`${isPlaying ? "pause" : "play"} video`}
               onClick={handlePlayToggle}
+              color={props.color}
             >
               {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
             </Button>
 
             {props.nextHref && (
-              <Button aria-label="next video" href={props.nextHref}>
+              <Button
+                aria-label="next video"
+                href={props.nextHref}
+                color={props.color}
+              >
                 <StepForwardFilled />
               </Button>
             )}
@@ -216,6 +225,7 @@ const VideoPlayer = (props: Props) => {
               aria-label={`${loop ? "disable" : "enable"} loop`}
               className={loop ? "" : "text-slate-400"}
               onClick={handleLoopToggle}
+              color={props.color}
             >
               <RetweetOutlined />
             </Button>
