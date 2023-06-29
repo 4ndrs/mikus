@@ -20,8 +20,13 @@ const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
   const hovering = useRef(false);
   const lastPlayingStateRef = useRef(false);
 
-  const progressPosition = `${((progress / duration) * 100).toFixed(3)}%`;
-  const bufferedPosition = `${((buffered / duration) * 100).toFixed(3)}%`;
+  const progressPosition = `${((progress / (duration || 1)) * 100).toFixed(
+    3
+  )}%`;
+
+  const bufferedPosition = `${((buffered / (duration || 1)) * 100).toFixed(
+    3
+  )}%`;
 
   const handleChange = (event: React.MouseEvent | MouseEvent | TouchEvent) => {
     if (
