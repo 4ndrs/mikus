@@ -34,10 +34,13 @@ const VideoPlayer = (props: Props) => {
   const [autoPlay, setAutoPlay] = useState(false);
   const [openMenu, setOpenMenu] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [hideCursor, setHideCursor] = useState(false);
   const [showControls, setShowControls] = useState(true);
   const [hidingControls, setHidingControls] = useState(false);
 
   const videoRef = useRef<HTMLVideoElement>(null);
+  const mainDivRef = useRef<HTMLDivElement>(null);
   const menuPositionRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
 
   useEffect(() => {
@@ -94,6 +97,67 @@ const VideoPlayer = (props: Props) => {
     setAutoPlay(true);
   }, []);
 
+  useEffect(() => {
+    if (!mainDivRef.current || !isPlaying || !isHovering) {
+      return;
+    }
+
+    // hide the cursor after 5 secs
+    const seconds = 5;
+    const mainDivElement = mainDivRef.current;
+
+    let id: NodeJS.Timer;
+
+    const hide = () => {
+      setHidingControls(true);
+      setHideCursor(true);
+    };
+
+    const resetTimeout = ({ showControls } = { showControls: true }) => {
+      setHidingControls(false);
+      setHideCursor(false);
+
+      if (showControls) {
+        setShowControls(true);
+      }
+
+      clearTimeout(id);
+
+      id = setTimeout(hide, seconds * 1000);
+    };
+
+    const handleMouseMove = () => resetTimeout();
+    const handleClick = () => resetTimeout({ showControls: false });
+
+    id = setTimeout(hide, seconds * 1000);
+
+    mainDivElement.addEventListener("mousemove", handleMouseMove);
+    mainDivElement.addEventListener("click", handleClick);
+
+    return () => {
+      mainDivElement.removeEventListener("mousemove", handleMouseMove);
+      mainDivElement.removeEventListener("click", handleClick);
+
+      clearTimeout(id);
+      setHideCursor(false);
+    };
+  }, [isPlaying, isHovering]);
+
+  const handleMouseEnter = () => {
+    setHidingControls(false);
+    setShowControls(true);
+
+    setIsHovering(true);
+  };
+
+  const handleMouseLeave = () => {
+    if (isPlaying) {
+      setHidingControls(true);
+    }
+
+    setIsHovering(false);
+  };
+
   const handlePlayToggle = () => {
     if (error) {
       return;
@@ -127,31 +191,29 @@ const VideoPlayer = (props: Props) => {
     setOpenMenu(true);
   };
 
+  const handleVideoClick = () => {
+    if (showControls) {
+      handlePlayToggle();
+    } else {
+      setShowControls(true);
+    }
+  };
+
   return (
     <div
-      onMouseEnter={() => {
-        setHidingControls(false);
-        setShowControls(true);
-      }}
-      onMouseLeave={() => {
-        if (isPlaying) {
-          setHidingControls(true);
-        }
-      }}
-      className="group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] landscape:relative"
+      ref={mainDivRef}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={`${
+        hideCursor ? "cursor-none" : "cursor-auto"
+      } group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] landscape:relative`}
     >
       <video
         autoPlay={autoPlay}
         loop={loop}
         ref={videoRef}
         src={props.src}
-        onClick={() => {
-          if (showControls) {
-            handlePlayToggle();
-          } else {
-            setShowControls(true);
-          }
-        }}
+        onClick={handleVideoClick}
         onContextMenu={handleContextMenu}
         className={`${error ? "hidden" : "block"} mx-auto h-full`}
       />
