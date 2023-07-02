@@ -1,9 +1,8 @@
 import { notFound, redirect } from "next/navigation";
 
-import { type Metadata } from "next";
+import Container from "./components/container";
 
-import Playlist from "./components/playlist";
-import VideoPlayer from "./components/video-player";
+import { type Metadata } from "next";
 
 const videos = [
   {
@@ -107,28 +106,19 @@ const Home = ({ searchParams }: Props) => {
     notFound();
   }
 
-  const selectedVideo = videos[selectedIndex];
   const nextVideo = videos[(selectedIndex + 1) % videos.length];
 
   const previousVideo =
     videos[selectedIndex - 1 >= 0 ? selectedIndex - 1 : videos.length - 1];
 
   return (
-    <main className="flex flex-col">
-      <VideoPlayer
-        src={selectedVideo.src}
-        color={selectedVideo.color}
-        nextHref={`/?v=${nextVideo.id}`}
-        previousHref={`?v=${previousVideo.id}`}
+    <main>
+      <Container
+        videos={videos}
+        selectedIndex={selectedIndex}
+        previousVideo={previousVideo}
+        nextVideo={nextVideo}
       />
-
-      <div className="mx-5 my-6">
-        <Playlist
-          title="初音ミク"
-          videos={videos}
-          selectedIndex={selectedIndex}
-        />
-      </div>
     </main>
   );
 };
