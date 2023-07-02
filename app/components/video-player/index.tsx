@@ -6,7 +6,9 @@ import {
   CaretRightFilled,
   HeartFilled,
   LoadingOutlined,
+  MinusSquareOutlined,
   PauseOutlined,
+  PlusSquareOutlined,
   RetweetOutlined,
   StepBackwardFilled,
   StepForwardFilled,
@@ -25,6 +27,8 @@ type Props = {
   color?: string;
   nextHref?: string;
   previousHref?: string;
+  smolMode?: boolean;
+  onSmolModeToggle?: () => void;
 };
 
 const VideoPlayer = (props: Props) => {
@@ -206,7 +210,11 @@ const VideoPlayer = (props: Props) => {
       onMouseLeave={handleMouseLeave}
       className={`${
         hideCursor ? "cursor-none" : "cursor-auto"
-      } group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] landscape:relative`}
+      } group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] ${
+        props.smolMode
+          ? "lg:aspect-square lg:h-auto lg:max-h-[960px] lg:min-h-[360px] lg:w-1/2 lg:max-w-[1280px]"
+          : ""
+      } landscape:relative`}
     >
       <video
         autoPlay={autoPlay}
@@ -320,6 +328,17 @@ const VideoPlayer = (props: Props) => {
                 color={props.color}
               >
                 <RetweetOutlined />
+              </Button>
+              <Button
+                aria-label={props.smolMode ? "Default view" : "Smol mode"}
+                onClick={props.onSmolModeToggle}
+                className="hidden lg:flex"
+              >
+                {props.smolMode ? (
+                  <PlusSquareOutlined />
+                ) : (
+                  <MinusSquareOutlined />
+                )}
               </Button>
               <Sound videoRef={videoRef} color={props.color} />
             </div>

@@ -11,9 +11,10 @@ type Props = {
   title: string;
   videos: Video[];
   selectedIndex: number;
+  smolMode?: boolean;
 };
 
-const Playlist = ({ title, videos, selectedIndex }: Props) => {
+const Playlist = ({ title, videos, selectedIndex, smolMode }: Props) => {
   const selectedRef = useRef<HTMLAnchorElement>(null);
   const scrollableParentRef = useRef<HTMLUListElement>(null);
 
@@ -31,7 +32,11 @@ const Playlist = ({ title, videos, selectedIndex }: Props) => {
   }, [selectedIndex]);
 
   return (
-    <aside className="overflow-hidden rounded-xl border border-gray-700">
+    <aside
+      className={`overflow-hidden rounded-xl border border-gray-700 ${
+        smolMode ? "lg:w-[25rem]" : ""
+      }`}
+    >
       <div className="bg-gray-800 pb-1 pl-4 pr-[0.38rem] pt-3">
         <h1 className="text-xl font-bold">{title}</h1>
         <p className="my-1 text-xs text-gray-400">
@@ -41,7 +46,9 @@ const Playlist = ({ title, videos, selectedIndex }: Props) => {
 
       <ul
         ref={scrollableParentRef}
-        className="max-h-[23rem] overflow-y-scroll bg-gray-900 [&::-webkit-scrollbar]:hidden"
+        className={`max-h-[23rem] overflow-y-scroll bg-gray-900 [&::-webkit-scrollbar]:hidden ${
+          smolMode ? "lg:h-min-[360px] lg:h-full lg:max-h-none" : ""
+        }`}
       >
         {videos.map((video, index) => (
           <li key={video.id}>
