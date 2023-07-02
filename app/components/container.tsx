@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Playlist from "./playlist";
 import VideoPlayer from "./video-player";
@@ -22,6 +22,24 @@ const Container = ({
 }: Props) => {
   const [smol, setSmol] = useState(false);
 
+  useEffect(() => {
+    const smol = localStorage.getItem("smolMode");
+
+    if (!smol) {
+      return;
+    }
+
+    setSmol(true);
+  }, []);
+
+  const handleSmolToggle = () => {
+    const nextSmol = !smol;
+
+    setSmol(nextSmol);
+
+    localStorage.setItem("smolMode", nextSmol ? "yes" : "");
+  };
+
   return (
     <div
       className={`flex flex-col ${
@@ -36,7 +54,7 @@ const Container = ({
         nextHref={`/?v=${nextVideo.id}`}
         previousHref={`?v=${previousVideo.id}`}
         smolMode={smol}
-        onSmolModeToggle={() => setSmol(!smol)}
+        onSmolModeToggle={handleSmolToggle}
       />
 
       <div className={`mx-5 my-6 ${smol ? "lg:mx-0 lg:my-0" : ""}`}>
