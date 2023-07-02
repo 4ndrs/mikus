@@ -212,7 +212,7 @@ const VideoPlayer = (props: Props) => {
         hideCursor ? "cursor-none" : "cursor-auto"
       } group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] ${
         props.smolMode
-          ? "lg:aspect-square lg:h-auto lg:max-h-[960px] lg:min-h-[360px] lg:w-1/2 lg:max-w-[1280px]"
+          ? "lg:aspect-square lg:h-auto lg:max-h-[min(960px,80vh)] lg:min-h-[360px] lg:w-1/2 lg:max-w-[1280px]"
           : ""
       } landscape:relative`}
     >
