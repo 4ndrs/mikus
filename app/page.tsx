@@ -1,4 +1,5 @@
 import { notFound, redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 import Container from "./components/container";
 
@@ -111,6 +112,8 @@ const Home = ({ searchParams }: Props) => {
   const previousVideo =
     videos[selectedIndex - 1 >= 0 ? selectedIndex - 1 : videos.length - 1];
 
+  const smolMode = cookies().get("smolMode")?.value === "yes";
+
   return (
     <main>
       <Container
@@ -118,6 +121,7 @@ const Home = ({ searchParams }: Props) => {
         selectedIndex={selectedIndex}
         previousVideo={previousVideo}
         nextVideo={nextVideo}
+        smolMode={smolMode}
       />
     </main>
   );

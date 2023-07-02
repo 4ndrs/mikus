@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import Playlist from "./playlist";
 import VideoPlayer from "./video-player";
@@ -12,6 +12,7 @@ type Props = {
   selectedIndex: number;
   previousVideo: Video;
   nextVideo: Video;
+  smolMode: boolean;
 };
 
 const Container = ({
@@ -19,25 +20,18 @@ const Container = ({
   selectedIndex,
   previousVideo,
   nextVideo,
+  smolMode,
 }: Props) => {
-  const [smol, setSmol] = useState(false);
-
-  useEffect(() => {
-    const smol = localStorage.getItem("smolMode");
-
-    if (!smol) {
-      return;
-    }
-
-    setSmol(true);
-  }, []);
+  const [smol, setSmol] = useState(smolMode);
 
   const handleSmolToggle = () => {
     const nextSmol = !smol;
 
     setSmol(nextSmol);
 
-    localStorage.setItem("smolMode", nextSmol ? "yes" : "");
+    document.cookie = `smolMode=${
+      nextSmol ? "yes" : "no"
+    };samesite=strict;max-age=2147483647`;
   };
 
   return (
