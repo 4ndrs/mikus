@@ -99,38 +99,6 @@ const VideoPlayer = (props: Props) => {
 
   useEffect(() => {
     setAutoPlay(true);
-
-    if (!mainDivRef.current) {
-      return;
-    }
-
-    const mainDivElement = mainDivRef.current;
-
-    const switchWidthToAuto = () => {
-      const breakpoint = Math.floor(window.innerHeight * 0.8); // 80vh
-      const mainHeight = Math.floor(
-        mainDivElement.getBoundingClientRect().height
-      );
-
-      if (
-        mainHeight >= breakpoint &&
-        mainDivElement.classList.contains("lg:w-1/2")
-      ) {
-        mainDivElement.classList.replace("lg:w-1/2", "lg:w-auto");
-        mainDivElement.classList.replace("lg:h-auto", "lg:h-[80vh]");
-      } else if (
-        mainHeight < breakpoint &&
-        mainDivElement.classList.contains("lg:w-auto")
-      ) {
-        mainDivElement.classList.replace("lg:w-auto", "lg:w-1/2");
-        mainDivElement.classList.replace("lg:h-[80vh]", "lg:h-auto");
-      }
-    };
-
-    visualViewport?.addEventListener("resize", switchWidthToAuto);
-
-    return () =>
-      visualViewport?.removeEventListener("resize", switchWidthToAuto);
   }, []);
 
   useEffect(() => {
