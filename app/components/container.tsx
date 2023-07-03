@@ -31,7 +31,7 @@ const Container = ({
 
     document.cookie = `smolMode=${
       nextSmol ? "yes" : "no"
-    };samesite=strict;max-age=2147483647`;
+    };samesite=lax;max-age=2147483647`;
   };
 
   return (
