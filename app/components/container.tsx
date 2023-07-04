@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import Playlist from "./playlist";
 import VideoPlayer from "./video-player";
@@ -23,6 +23,22 @@ const Container = ({
   smolMode,
 }: Props) => {
   const [smol, setSmol] = useState(smolMode);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      if (document.fullscreenElement) {
+        setIsFullscreen(true);
+      } else {
+        setIsFullscreen(false);
+      }
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+    return () =>
+      document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
 
   const handleSmolToggle = () => {
     const nextSmol = !smol;
@@ -32,6 +48,22 @@ const Container = ({
     document.cookie = `smolMode=${
       nextSmol ? "yes" : "no"
     };samesite=lax;max-age=2147483647`;
+  };
+
+  const handleFullscreenToggle = async () => {
+    try {
+      if (!isFullscreen) {
+        await document.documentElement.requestFullscreen();
+        setIsFullscreen(true);
+      } else {
+        await document.exitFullscreen();
+        setIsFullscreen(false);
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        console.error("Unable to switch fullscreen mode: ", error.message);
+      }
+    }
   };
 
   return (
@@ -49,6 +81,8 @@ const Container = ({
         previousHref={`?v=${previousVideo.id}`}
         smolMode={smol}
         onSmolModeToggle={handleSmolToggle}
+        isFullscreen={isFullscreen}
+        onFullscreenToggle={handleFullscreenToggle}
       />
 
       <div className={`mx-5 my-6 ${smol ? "lg:mx-0 lg:my-0" : ""}`}>

@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 
 import {
   CaretRightFilled,
+  FullscreenExitOutlined,
+  FullscreenOutlined,
   HeartFilled,
   LoadingOutlined,
   MinusSquareOutlined,
@@ -29,6 +31,8 @@ type Props = {
   previousHref?: string;
   smolMode?: boolean;
   onSmolModeToggle?: () => void;
+  isFullscreen?: boolean;
+  onFullscreenToggle?: () => void;
 };
 
 const VideoPlayer = (props: Props) => {
@@ -173,7 +177,6 @@ const VideoPlayer = (props: Props) => {
       videoRef.current?.play();
     }
   };
-
   const handleLoopToggle = () => {
     if (!videoRef.current || error) {
       return;
@@ -208,13 +211,15 @@ const VideoPlayer = (props: Props) => {
       ref={mainDivRef}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
-      className={`${
+      className={`group/player z-[1] bg-black ${
         hideCursor ? "cursor-none" : "cursor-auto"
-      } group/player sticky top-0 z-[1] h-80 w-full bg-black lg:relative lg:h-[80vh] ${
-        props.smolMode
-          ? "lg:aspect-square lg:h-auto lg:max-h-[min(960px,80vh)] lg:min-h-[360px] lg:w-1/2 lg:max-w-[1280px]"
-          : ""
-      } landscape:relative`}
+      } ${
+        props.isFullscreen
+          ? "fixed inset-0"
+          : props.smolMode
+          ? "sticky top-0 lg:aspect-square lg:h-auto lg:max-h-[min(960px,80vh)] lg:min-h-[360px] lg:w-1/2 lg:max-w-[1280px] landscape:relative"
+          : "sticky top-0 h-80 w-full lg:relative lg:h-[80vh] landscape:relative"
+      }`}
     >
       <video
         autoPlay={autoPlay}
@@ -332,7 +337,7 @@ const VideoPlayer = (props: Props) => {
               <Button
                 aria-label={props.smolMode ? "Default view" : "Smol mode"}
                 onClick={props.onSmolModeToggle}
-                className="hidden lg:flex"
+                className={props.isFullscreen ? "hidden" : "hidden lg:flex"}
               >
                 {props.smolMode ? (
                   <PlusSquareOutlined />
@@ -341,6 +346,18 @@ const VideoPlayer = (props: Props) => {
                 )}
               </Button>
               <Sound videoRef={videoRef} color={props.color} />
+              <Button
+                aria-label={`${
+                  props.isFullscreen ? "exit" : "enter"
+                } fullscreen mode`}
+                onClick={props.onFullscreenToggle}
+              >
+                {props.isFullscreen ? (
+                  <FullscreenExitOutlined />
+                ) : (
+                  <FullscreenOutlined />
+                )}
+              </Button>
             </div>
           </div>
         </ProgressBarProvider>
