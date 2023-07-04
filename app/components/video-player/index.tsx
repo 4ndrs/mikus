@@ -198,7 +198,24 @@ const VideoPlayer = (props: Props) => {
     setOpenMenu(true);
   };
 
-  const handleVideoClick = () => {
+  const isDoubleClickRef = useRef(false);
+
+  const handleVideoClick = async (event: React.MouseEvent) => {
+    // more than 1 click
+    if (event.detail > 1) {
+      isDoubleClickRef.current = true;
+      setTimeout(() => (isDoubleClickRef.current = false), 700);
+
+      return;
+    }
+
+    // wait 200 milliseconds to check if it's a double click
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    if (isDoubleClickRef.current) {
+      return;
+    }
+
     if (showControls) {
       handlePlayToggle();
     } else {
