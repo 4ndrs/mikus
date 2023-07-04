@@ -31,8 +31,8 @@ type Props = {
   previousHref?: string;
   smolMode?: boolean;
   onSmolModeToggle?: () => void;
-  isFullscreen?: boolean;
-  onFullscreenToggle?: () => void;
+  isFullscreen: boolean;
+  onFullscreenToggle: () => void;
 };
 
 const VideoPlayer = (props: Props) => {
