@@ -234,7 +234,7 @@ const VideoPlayer = (props: Props) => {
         props.isFullscreen
           ? "fixed inset-0"
           : props.smolMode
-          ? "sticky top-0 lg:aspect-square lg:h-auto lg:max-h-[min(960px,80vh)] lg:min-h-[360px] lg:w-1/2 lg:max-w-[1280px] landscape:relative"
+          ? "sticky top-0 lg:aspect-video lg:h-auto lg:max-h-[min(960px,80vh)] lg:min-h-[360px] lg:w-1/2 lg:max-w-[1280px] landscape:relative"
           : "sticky top-0 h-80 w-full lg:relative lg:h-[80vh] landscape:relative"
       }`}
     >
