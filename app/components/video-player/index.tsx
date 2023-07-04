@@ -227,6 +227,7 @@ const VideoPlayer = (props: Props) => {
         ref={videoRef}
         src={props.src}
         onClick={handleVideoClick}
+        onDoubleClick={props.onFullscreenToggle}
         onContextMenu={handleContextMenu}
         className={`${error ? "hidden" : "block"} mx-auto h-full`}
       />
