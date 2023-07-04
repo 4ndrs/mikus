@@ -16,7 +16,7 @@ import {
   StepForwardFilled,
 } from "@ant-design/icons";
 
-import { ProgressBarProvider } from "@/app/context";
+import { ProgressBarProvider, useColor } from "@/app/context";
 import TimeVisualizer from "./time-visualizer";
 import ProgressBar from "./progress-bar";
 import Satanichia from "../../assets/1484726831236.png";
@@ -26,7 +26,6 @@ import Image from "next/image";
 
 type Props = {
   src: string;
-  color?: string;
   nextHref?: string;
   previousHref?: string;
   smolMode?: boolean;
@@ -47,6 +46,7 @@ const VideoPlayer = (props: Props) => {
   const [showControls, setShowControls] = useState(true);
   const [hidingControls, setHidingControls] = useState(false);
 
+  const color = useColor();
   const videoRef = useRef<HTMLVideoElement>(null);
   const mainDivRef = useRef<HTMLDivElement>(null);
   const menuPositionRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
@@ -251,7 +251,7 @@ const VideoPlayer = (props: Props) => {
 
       {loading && !error && (
         <LoadingOutlined
-          style={{ color: props.color }}
+          style={{ color }}
           className="absolute right-[calc(50%-calc(6rem*0.5))] top-[calc(50%-calc(6rem*0.5))] text-[6rem] text-miku-2"
         />
       )}
@@ -285,8 +285,7 @@ const VideoPlayer = (props: Props) => {
           onClick={() => setOpenMenu(false)}
           className="fixed inset-0 bg-transparent"
         />
-        <HeartFilled style={{ color: props.color }} className="text-miku-3" />{" "}
-        Mikus
+        <HeartFilled style={{ color }} className="text-miku-3" /> Mikus
       </div>
       <div
         onAnimationEnd={() => {
@@ -304,22 +303,14 @@ const VideoPlayer = (props: Props) => {
         } absolute bottom-0 left-0 right-0 mx-0 flex-col gap-4 bg-gradient-to-t from-black/90 to-transparent px-8 py-2`}
       >
         <ProgressBarProvider>
-          <ProgressBar
-            videoRef={videoRef}
-            isPlaying={isPlaying}
-            color={props.color}
-          />
+          <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 
           <div className="flex items-center justify-between">
             <TimeVisualizer videoRef={videoRef} />
 
             <div className="flex gap-1">
               {props.previousHref && (
-                <Button
-                  aria-label="previous video"
-                  href={props.previousHref}
-                  color={props.color}
-                >
+                <Button aria-label="previous video" href={props.previousHref}>
                   <StepBackwardFilled />
                 </Button>
               )}
@@ -327,17 +318,12 @@ const VideoPlayer = (props: Props) => {
               <Button
                 aria-label={`${isPlaying ? "pause" : "play"} video`}
                 onClick={handlePlayToggle}
-                color={props.color}
               >
                 {isPlaying ? <PauseOutlined /> : <CaretRightFilled />}
               </Button>
 
               {props.nextHref && (
-                <Button
-                  aria-label="next video"
-                  href={props.nextHref}
-                  color={props.color}
-                >
+                <Button aria-label="next video" href={props.nextHref}>
                   <StepForwardFilled />
                 </Button>
               )}
@@ -348,7 +334,6 @@ const VideoPlayer = (props: Props) => {
                 aria-label={`${loop ? "disable" : "enable"} loop`}
                 className={loop ? "" : "text-slate-400"}
                 onClick={handleLoopToggle}
-                color={props.color}
               >
                 <RetweetOutlined />
               </Button>
@@ -363,7 +348,7 @@ const VideoPlayer = (props: Props) => {
                   <MinusSquareOutlined />
                 )}
               </Button>
-              <Sound videoRef={videoRef} color={props.color} />
+              <Sound videoRef={videoRef} />
               <Button
                 aria-label={`${
                   props.isFullscreen ? "exit" : "enter"

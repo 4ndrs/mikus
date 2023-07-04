@@ -1,14 +1,13 @@
-import { useProgressBar } from "@/app/context";
+import { useColor, useProgressBar } from "@/app/context";
 import { useDuration, useProgress } from "@/app/hooks";
 import { useEffect, useRef, useState } from "react";
 
 type Props = {
   videoRef: React.RefObject<HTMLVideoElement>;
   isPlaying: boolean;
-  color?: string;
 };
 
-const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
+const ProgressBar = ({ videoRef, isPlaying }: Props) => {
   const [movingBall, setMovingBall] = useState(false);
   const [hidingBall, setHidingBall] = useState(false);
   const [showBall, setShowBall] = useState(false);
@@ -17,6 +16,7 @@ const ProgressBar = ({ videoRef, isPlaying, color }: Props) => {
   const { progress, buffered } = useProgress(videoRef);
 
   const duration = useDuration(videoRef);
+  const color = useColor();
 
   const barRef = useRef<HTMLDivElement>(null);
   const hovering = useRef(false);

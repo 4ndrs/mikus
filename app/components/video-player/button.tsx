@@ -1,14 +1,14 @@
 import { useState } from "react";
+import { useColor } from "@/app/context";
 
 import Link from "next/link";
 
-type Props = (
-  | React.ComponentProps<"button">
-  | React.ComponentProps<typeof Link>
-) & { color?: string };
+type Props = React.ComponentProps<"button"> | React.ComponentProps<typeof Link>;
 
-const Button = ({ children, className, color, ...props }: Props) => {
+const Button = ({ children, className, ...props }: Props) => {
   const [hovering, setHovering] = useState(false);
+
+  const color = useColor();
 
   const handleEnter = () => {
     if (color) {

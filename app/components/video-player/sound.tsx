@@ -1,17 +1,19 @@
 import { SoundFilled, SoundOutlined } from "@ant-design/icons";
 import { useEffect, useRef, useState } from "react";
+import { useColor } from "@/app/context";
 
 import Button from "./button";
 
-type Props = { videoRef: React.RefObject<HTMLVideoElement>; color?: string };
+type Props = { videoRef: React.RefObject<HTMLVideoElement> };
 
-const Sound = ({ videoRef, color }: Props) => {
+const Sound = ({ videoRef }: Props) => {
   const [volume, setVolume] = useState(0);
 
   const lastVolumeState = useRef(0.2);
+  const barRef = useRef<HTMLDivElement>(null);
+  const color = useColor();
 
   const position = `${volume * 100}%`;
-  const barRef = useRef<HTMLDivElement>(null);
   const max = 1.0;
 
   useEffect(() => {

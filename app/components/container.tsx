@@ -1,11 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ColorContext } from "@/app/context";
 
 import Playlist from "./playlist";
 import VideoPlayer from "./video-player";
 
-import type { Video } from "../types";
+import type { Video } from "@/app/types";
 
 type Props = {
   videos: Video[];
@@ -74,16 +75,17 @@ const Container = ({
           : ""
       }`}
     >
-      <VideoPlayer
-        src={videos[selectedIndex].src}
-        color={videos[selectedIndex].color}
-        nextHref={`/?v=${nextVideo.id}`}
-        previousHref={`?v=${previousVideo.id}`}
-        smolMode={smol}
-        onSmolModeToggle={handleSmolToggle}
-        isFullscreen={isFullscreen}
-        onFullscreenToggle={handleFullscreenToggle}
-      />
+      <ColorContext.Provider value={videos[selectedIndex].color}>
+        <VideoPlayer
+          src={videos[selectedIndex].src}
+          nextHref={`/?v=${nextVideo.id}`}
+          previousHref={`?v=${previousVideo.id}`}
+          smolMode={smol}
+          onSmolModeToggle={handleSmolToggle}
+          isFullscreen={isFullscreen}
+          onFullscreenToggle={handleFullscreenToggle}
+        />
+      </ColorContext.Provider>
 
       <div className={`mx-5 my-6 ${smol ? "lg:mx-0 lg:my-0" : ""}`}>
         <Playlist
