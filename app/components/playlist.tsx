@@ -66,13 +66,11 @@ const Playlist = ({
         }`}
       >
         <div
-          className={`
-          relative
-            ${
-              isFullscreen
-                ? "border-b border-b-gray-200/30 bg-black/80 p-6"
-                : "bg-gray-800 pb-1 pl-4 pr-[0.38rem] pt-3"
-            }
+          className={`relative ${
+            isFullscreen
+              ? "border-b border-b-gray-200/30 bg-black/80 p-6"
+              : "bg-gray-800 pb-1 pl-4 pr-[0.38rem] pt-3"
+          }
           `}
         >
           <h1 className="text-xl font-bold">{title}</h1>
