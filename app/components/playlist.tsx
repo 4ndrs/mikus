@@ -57,7 +57,7 @@ const Playlist = ({
       <aside
         className={`overflow-hidden rounded-xl border border-gray-700 ${
           isFullscreen
-            ? `fixed -inset-y-1 -left-[min(25.1rem,100%)] z-[1] w-[25rem] max-w-full rounded-none border-transparent backdrop-blur transition-transform duration-300 ${
+            ? `fixed -inset-y-1 -left-[min(25.1rem,100%)] z-[1] w-[25rem] max-w-full rounded-none border-transparent backdrop-blur transition-transform duration-300 ease-out ${
                 playlistIsOpen ? "translate-x-full" : "translate-x-0"
               }`
             : smolMode
