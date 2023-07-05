@@ -8,6 +8,7 @@ import {
   FullscreenOutlined,
   HeartFilled,
   LoadingOutlined,
+  MenuOutlined,
   MinusSquareOutlined,
   PauseOutlined,
   PlusSquareOutlined,
@@ -32,6 +33,7 @@ type Props = {
   onSmolModeToggle?: () => void;
   isFullscreen: boolean;
   onFullscreenToggle: () => void;
+  onPlaylistOpen: () => void;
 };
 
 const VideoPlayer = (props: Props) => {
@@ -287,6 +289,7 @@ const VideoPlayer = (props: Props) => {
         />
         <HeartFilled style={{ color }} className="text-miku-3" /> Mikus
       </div>
+
       <div
         onAnimationEnd={() => {
           if (hidingControls) {
@@ -302,6 +305,16 @@ const VideoPlayer = (props: Props) => {
             : "flex animate-fade-in"
         } absolute bottom-0 left-0 right-0 mx-0 flex-col gap-4 bg-gradient-to-t from-black/90 to-transparent px-8 py-2`}
       >
+        {props.isFullscreen && (
+          <Button
+            aria-label="open playlist"
+            onClick={props.onPlaylistOpen}
+            className="fixed left-0 top-0 m-4 bg-black/25 p-2"
+          >
+            <MenuOutlined />
+          </Button>
+        )}
+
         <ProgressBarProvider>
           <ProgressBar videoRef={videoRef} isPlaying={isPlaying} />
 

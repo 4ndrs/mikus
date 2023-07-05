@@ -25,6 +25,7 @@ const Container = ({
 }: Props) => {
   const [smol, setSmol] = useState(smolMode);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [playlistIsOpen, setPlaylistIsOpen] = useState(false);
 
   useEffect(() => {
     const handleFullscreenChange = () => {
@@ -84,6 +85,7 @@ const Container = ({
           onSmolModeToggle={handleSmolToggle}
           isFullscreen={isFullscreen}
           onFullscreenToggle={handleFullscreenToggle}
+          onPlaylistOpen={() => setPlaylistIsOpen(true)}
         />
       </ColorContext.Provider>
 
@@ -93,6 +95,9 @@ const Container = ({
           videos={videos}
           selectedIndex={selectedIndex}
           smolMode={smol}
+          isFullscreen={isFullscreen}
+          playlistIsOpen={playlistIsOpen}
+          onPlaylistClose={() => setPlaylistIsOpen(false)}
         />
       </div>
     </div>
