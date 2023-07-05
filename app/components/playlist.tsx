@@ -95,7 +95,7 @@ const Playlist = ({
           ref={scrollableParentRef}
           className={`overflow-y-scroll ${
             isFullscreen
-              ? "max-h-[calc(100%-101px)] bg-black/70 backdrop-blur"
+              ? "h-[calc(100%-101px)] bg-black/70 backdrop-blur"
               : "max-h-[23rem] bg-gray-900 "
           } [&::-webkit-scrollbar]:hidden ${
             smolMode ? "lg:h-min-[360px] lg:h-full lg:max-h-none" : ""
