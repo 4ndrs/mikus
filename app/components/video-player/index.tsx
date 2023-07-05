@@ -309,7 +309,7 @@ const VideoPlayer = (props: Props) => {
           <Button
             aria-label="open playlist"
             onClick={props.onPlaylistOpen}
-            className="fixed left-0 top-0 m-4 bg-black/25 p-2"
+            className="fixed left-0 top-0 m-4 p-2 [&:not(:hover)]:!bg-black/25"
           >
             <MenuOutlined />
           </Button>
