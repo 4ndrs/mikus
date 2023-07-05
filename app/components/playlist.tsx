@@ -57,7 +57,7 @@ const Playlist = ({
       <aside
         className={`overflow-hidden rounded-xl border border-gray-700 ${
           isFullscreen
-            ? `fixed -inset-y-1 -left-[25.1rem] z-[1] w-[25rem] rounded-none border-transparent backdrop-blur transition-transform duration-300 ${
+            ? `fixed -inset-y-1 -left-[min(25.1rem,100%)] z-[1] w-[25rem] max-w-full rounded-none border-transparent backdrop-blur transition-transform duration-300 ${
                 playlistIsOpen ? "translate-x-full" : "translate-x-0"
               }`
             : smolMode
@@ -93,8 +93,10 @@ const Playlist = ({
 
         <ul
           ref={scrollableParentRef}
-          className={`max-h-[23rem] overflow-y-scroll ${
-            isFullscreen ? "bg-black/70 backdrop-blur" : "bg-gray-900"
+          className={`overflow-y-scroll ${
+            isFullscreen
+              ? "max-h-[calc(100%-101px)] bg-black/70 backdrop-blur"
+              : "max-h-[23rem] bg-gray-900 "
           } [&::-webkit-scrollbar]:hidden ${
             smolMode ? "lg:h-min-[360px] lg:h-full lg:max-h-none" : ""
           }`}
