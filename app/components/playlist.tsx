@@ -93,12 +93,12 @@ const Playlist = ({
 
         <ul
           ref={scrollableParentRef}
-          className={`overflow-y-scroll ${
+          className={`overflow-y-scroll [&::-webkit-scrollbar]:hidden ${
             isFullscreen
               ? "h-[calc(100%-101px)] bg-black/70 backdrop-blur"
-              : "max-h-[23rem] bg-gray-900 "
-          } [&::-webkit-scrollbar]:hidden ${
-            smolMode ? "lg:h-min-[360px] lg:h-full lg:max-h-none" : ""
+              : `max-h-[23rem] bg-gray-900 ${
+                  smolMode ? "lg:h-min-[360px] lg:h-full lg:max-h-none" : ""
+                }`
           }`}
         >
           {videos.map((video, index) => (
