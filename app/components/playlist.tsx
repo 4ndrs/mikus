@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-import Link from "next/link";
+import Link from "@/app/components/link";
 import Image from "next/image";
 
 import { CloseOutlined } from "@ant-design/icons";

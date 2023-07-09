@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useColor } from "@/app/context";
 
-import Link from "next/link";
+import Link from "@/app/components/link";
 
 type Props = React.ComponentProps<"button"> | React.ComponentProps<typeof Link>;
 
